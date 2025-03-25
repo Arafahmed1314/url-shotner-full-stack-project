@@ -1,103 +1,175 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useState } from 'react';
+import Features from './components/Features';
+
+export default function Page() {
+  const [url, setUrl] = useState('');
+  const [password, setPassword] = useState('');
+  const [shortUrl, setShortUrl] = useState('');
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isProtected, setIsProtected] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsAnimating(true);
+    setError('');
+
+    try {
+      const res = await fetch('/api/shorten', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url, password: isProtected ? password : null }),
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        setShortUrl(`http://${data.shortUrl}`);
+      } else {
+        setError(data.message || 'Something went wrong');
+      }
+    } catch (err) {
+      setError('Failed to shorten URL');
+    } finally {
+      setIsAnimating(false);
+    }
+  };
+
+  const togglePasswordProtection = () => {
+    setIsProtected(!isProtected);
+    if (!isProtected) {
+      setPassword('');
+    }
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+      {/* Navigation Bar */}
+      <nav className="backdrop-blur-md bg-white/10 fixed w-full top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-2">
+              <span className="text-white">🔗</span>
+              <span className="text-white font-bold text-xl">URLify</span>
+            </div>
+            <div className="hidden md:block">
+              <div className="flex items-center space-x-8">
+                <a href="#" className="text-white hover:text-pink-200 transition-colors duration-200 font-medium">Home</a>
+                <a href="#" className="text-white hover:text-pink-200 transition-colors duration-200 font-medium">Contact</a>
+                <a href="#" className="bg-white text-purple-600 px-4 py-2 rounded-full font-medium hover:bg-opacity-90 transition-all duration-200 transform hover:scale-105">Login</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Main Content */}
+      <main className="pt-24 pb-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            Shorten Your URLs
+            <span className="block text-pink-200">With Style & Security</span>
+          </h1>
+          <p className="text-white/80 text-lg mb-12">
+            Transform your long URLs into memorable, shareable links with optional password protection
+          </p>
+
+          {/* URL Input Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="backdrop-blur-lg bg-white/10 p-8 rounded-2xl shadow-2xl">
+              <div className="flex flex-col space-y-4">
+                {/* URL Input */}
+                <div className="flex flex-col md:flex-row gap-4">
+                  <input
+                    type="url"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    placeholder="Paste your long URL here..."
+                    className="flex-1 px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-all duration-200"
+                    required
+                  />
+                </div>
+
+                {/* Password Protection Toggle */}
+                <div className="flex items-center justify-center gap-4">
+                  <button
+                    type="button"
+                    onClick={togglePasswordProtection}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${isProtected
+                      ? 'bg-pink-500/20 text-pink-200'
+                      : 'bg-white/5 text-white/70 hover:bg-white/10'
+                      }`}
+                  >
+                    {isProtected ? '🔒' : '🔓'}
+                    {isProtected ? 'Password Protected' : 'Add Password Protection'}
+                  </button>
+                </div>
+
+                {/* Password Input */}
+                {isProtected && (
+                  <div className="relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter password for protection..."
+                      className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-all duration-200"
+                      required={isProtected}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white/80 transition-colors duration-200"
+                    >
+                      {showPassword ? '👁️‍🗨️' : '👁️'}
+                    </button>
+                  </div>
+                )}
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  className={`w-full md:w-auto px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl font-medium text-white hover:opacity-90 transform transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400 flex items-center justify-center gap-2 ${isAnimating ? 'animate-pulse' : ''
+                    }`}
+                >
+                  Shorten URL
+                  <span>➡️</span>
+                </button>
+              </div>
+
+              {/* Result Section */}
+              {shortUrl && (
+                <div className="mt-6 p-4 bg-white/5 rounded-xl border border-white/10 flex items-center justify-between animate-fade-in">
+                  <div className="flex items-center gap-2 text-white">
+                    <span>🌐</span>
+                    <span>{shortUrl}</span>
+                    {isProtected && <span className="text-pink-400">🔒</span>}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => navigator.clipboard.writeText(shortUrl)}
+                    className="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
+                  >
+                    <span className="text-white">📋</span>
+                  </button>
+                </div>
+              )}
+
+              {/* Error Message */}
+              {error && (
+                <div className="mt-4 p-4 bg-red-500/20 rounded-xl border border-red-500/30 text-pink-200 animate-fade-in">
+                  {error}
+                </div>
+              )}
+            </div>
+          </form>
+
+          {/* Features */}
+          <Features />
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
