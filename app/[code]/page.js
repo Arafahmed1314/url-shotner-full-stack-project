@@ -1,6 +1,6 @@
 import { connectToDatabase } from '../../lib/mongodb';
+import PasswordForm from './PasswordForm.jsx'; // Explicitly include .jsx
 import { redirect } from 'next/navigation';
-import PasswordForm from './PasswordForm';
 
 // Server Component: Fetch data on the server and handle redirection
 export default async function PasswordPage({ params }) {
@@ -10,33 +10,50 @@ export default async function PasswordPage({ params }) {
 
     let originalUrl = null;
     let error = null;
+    let urlDoc = null;
 
-    // Fetch the URL document without wrapping the redirect logic in try/catch
-    const { db } = await connectToDatabase();
-    const urlDoc = await db.collection('urls').findOne(
-        { shortCode: code },
-        { projection: { shortCode: 1, originalUrl: 1, password: 1 } }
-    );
+    // Fetch the URL document with error handling
+    try {
+        const { db } = await connectToDatabase();
+        urlDoc = await db.collection('urls').findOne(
+            { shortCode: code },
+            { projection: { shortCode: 1, originalUrl: 1, password: 1 } }
+        );
 
-    console.log('urlDoc:', urlDoc);
-    console.log('urlDoc.password:', urlDoc.password);
-    console.log('urlDoc.password === null:', urlDoc.password === null);
+        // If the URL exists, increment the clicks counter
+        if (urlDoc) {
+            await db.collection('urls').updateOne(
+                { shortCode: code },
+                { $inc: { clicks: 1 } } // Increment clicks by 1
+            );
+        }
+    } catch (err) {
+        console.error('Error fetching URL document:', err);
+        error = 'Server error';
+    }
 
-    if (!urlDoc) {
-        error = 'URL not found';
-    } else {
-        originalUrl = urlDoc.originalUrl;
+    // Process the result after the try/catch
+    if (urlDoc) {
+        console.log('urlDoc:', urlDoc);
+        console.log('urlDoc.password:', urlDoc.password);
+        console.log('urlDoc.password === null:', urlDoc.password === null);
 
-        // If no password, redirect directly to the original URL
-        if (urlDoc.password === null || urlDoc.password === undefined) {
-            console.log('No password set, redirecting to:', urlDoc.originalUrl);
+        if (!urlDoc) {
+            error = 'URL not found';
+        } else {
+            originalUrl = urlDoc.originalUrl;
 
-            // Validate the URL before redirecting
-            if (!urlDoc.originalUrl || !urlDoc.originalUrl.match(/^(http|https):\/\/[^\s$.?#].[^\s]*$/)) {
-                console.log('Invalid original URL:', urlDoc.originalUrl);
-                error = 'Invalid original URL';
-            } else {
-                redirect(urlDoc.originalUrl); // This will throw NEXT_REDIRECT, which Next.js will handle
+            // If no password, redirect directly to the original URL
+            if (urlDoc.password === null || urlDoc.password === undefined) {
+                console.log('No password set, redirecting to:', urlDoc.originalUrl);
+
+                // Validate the URL before redirecting
+                if (!urlDoc.originalUrl || !urlDoc.originalUrl.match(/^(http|https):\/\/[^\s$.?#].[^\s]*$/)) {
+                    console.log('Invalid original URL:', urlDoc.originalUrl);
+                    error = 'Invalid original URL';
+                } else {
+                    redirect(urlDoc.originalUrl); // This will throw NEXT_REDIRECT
+                }
             }
         }
     }
