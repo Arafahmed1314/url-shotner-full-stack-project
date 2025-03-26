@@ -1,6 +1,6 @@
 import { connectToDatabase } from '../../lib/mongodb';
-import PasswordForm from './PasswordForm';
 import { redirect } from 'next/navigation';
+import PasswordForm from './PasswordForm';
 
 // Server Component: Fetch data on the server and handle redirection
 export default async function PasswordPage({ params }) {
