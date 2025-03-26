@@ -14,12 +14,30 @@ function generateShortCode(length = 6) {
 export async function POST(request) {
     const { url, password } = await request.json();
 
-    if (!url || !url.match(/^(http|https):\/\/[^\s$.?#].[^\s]*$/)) {
+    // Ensure the URL has a protocol (http:// or https://)
+    let formattedUrl = url;
+    if (!formattedUrl.match(/^(http|https):\/\//)) {
+        formattedUrl = `https://${formattedUrl}`; // Default to https if no protocol is provided
+    }
+
+    // Validate the URL
+    if (!formattedUrl.match(/^(http|https):\/\/[^\s$.?#].[^\s]*$/)) {
         return NextResponse.json({ message: 'Invalid URL' }, { status: 400 });
     }
 
     try {
         const { db } = await connectToDatabase();
+
+        // Check if the long URL already exists in the database
+        const existingUrl = await db.collection('urls').findOne({ originalUrl: formattedUrl });
+
+        if (existingUrl) {
+            // If the URL already exists, return the existing short URL
+            const shortUrl = `${request.headers.get('host')}/${existingUrl.shortCode}`;
+            return NextResponse.json({ shortUrl, message: 'URL already shortened' });
+        }
+
+        // If the URL doesn't exist, generate a new short code
         let shortCode;
 
         // Ensure short code is unique
@@ -33,11 +51,12 @@ export async function POST(request) {
         // Save to MongoDB
         await db.collection('urls').insertOne({
             shortCode,
-            originalUrl: url,
+            originalUrl: formattedUrl,
             password: hashedPassword,
             createdAt: new Date(),
         });
 
+        // Return the short URL
         const shortUrl = `${request.headers.get('host')}/${shortCode}`;
         return NextResponse.json({ shortUrl });
     } catch (error) {
