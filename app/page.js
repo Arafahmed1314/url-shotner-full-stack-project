@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import { useState } from 'react';
@@ -5,6 +6,7 @@ import Features from './components/Features';
 
 export default function Page() {
   const [url, setUrl] = useState('');
+  const [customCode, setCustomCode] = useState(''); // New state for custom short code
   const [password, setPassword] = useState('');
   const [shortUrl, setShortUrl] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
@@ -21,7 +23,7 @@ export default function Page() {
       const res = await fetch('/api/shorten', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url, password: isProtected ? password : null }),
+        body: JSON.stringify({ url, customCode, password: isProtected ? password : null }),
       });
       const data = await res.json();
 
@@ -34,7 +36,8 @@ export default function Page() {
       setError('Failed to shorten URL');
     } finally {
       setIsAnimating(false);
-      setUrl("");
+      setUrl('');
+      setCustomCode(''); // Reset custom code after submission
     }
   };
 
@@ -57,9 +60,18 @@ export default function Page() {
             </div>
             <div className="hidden md:block">
               <div className="flex items-center space-x-8">
-                <a href="#" className="text-white hover:text-pink-200 transition-colors duration-200 font-medium">Home</a>
-                <a href="#" className="text-white hover:text-pink-200 transition-colors duration-200 font-medium">Contact</a>
-                <a href="#" className="bg-white text-purple-600 px-4 py-2 rounded-full font-medium hover:bg-opacity-90 transition-all duration-200 transform hover:scale-105">Login</a>
+                <a href="#" className="text-white hover:text-pink-200 transition-colors duration-200 font-medium">
+                  Home
+                </a>
+                <a href="#" className="text-white hover:text-pink-200 transition-colors duration-200 font-medium">
+                  Contact
+                </a>
+                <a
+                  href="#"
+                  className="bg-white text-purple-600 px-4 py-2 rounded-full font-medium hover:bg-opacity-90 transition-all duration-200 transform hover:scale-105"
+                >
+                  Login
+                </a>
               </div>
             </div>
           </div>
@@ -93,21 +105,38 @@ export default function Page() {
                   />
                 </div>
 
-                {/* Password Protection Toggle */}
-                {url && (<div className="flex items-center justify-center gap-4">
-                  <button
-                    type="button"
-                    onClick={togglePasswordProtection}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${isProtected
-                      ? 'bg-pink-500/20 text-pink-200'
-                      : 'bg-white/5 text-white/70 hover:bg-white/10'
-                      }`}
-                  >
-                    {isProtected ? '🔒' : '🔓'}
-                    {isProtected ? 'Password Protected' : 'Add Password Protection'}
-                  </button>
-                </div>)}
+                {/* Custom Short Code Input */}
+                {url && (
+                  <div className="flex flex-col gap-2">
+                    <input
+                      type="text"
+                      value={customCode}
+                      onChange={(e) => setCustomCode(e.target.value)}
+                      placeholder="Custom short code (optional)"
+                      className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-all duration-200"
+                    />
+                    <p className="text-white/70 text-sm text-left">
+                      Enter a custom code (e.g., "mycustomcode"). Leave blank for a random code.
+                    </p>
+                  </div>
+                )}
 
+                {/* Password Protection Toggle */}
+                {url && (
+                  <div className="flex items-center justify-center gap-4">
+                    <button
+                      type="button"
+                      onClick={togglePasswordProtection}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${isProtected
+                        ? 'bg-pink-500/20 text-pink-200'
+                        : 'bg-white/5 text-white/70 hover:bg-white/10'
+                        }`}
+                    >
+                      {isProtected ? '🔒' : '🔓'}
+                      {isProtected ? 'Password Protected' : 'Add Password Protection'}
+                    </button>
+                  </div>
+                )}
 
                 {/* Password Input */}
                 {isProtected && (

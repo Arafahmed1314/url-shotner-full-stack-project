@@ -1,4 +1,5 @@
 import { connectToDatabase } from '../../lib/mongodb';
+import { headers } from 'next/headers'; // Import headers to get the current host
 
 export default async function DashboardPage() {
     let urls = [];
@@ -11,6 +12,12 @@ export default async function DashboardPage() {
         console.error('Error fetching URLs:', err);
         error = 'Failed to load analytics';
     }
+
+    // Get the current host from the headers
+    const headersList = headers();
+    const host = headersList.get('host');
+    // Determine the protocol based on the environment
+    const protocol = process.env.NODE_ENV === 'production' ? 'https://' : 'http://';
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900">
@@ -67,14 +74,12 @@ export default async function DashboardPage() {
                                             <p className="text-white text-lg">
                                                 <span className="font-semibold text-gray-300">Short URL:</span>{' '}
                                                 <a
-                                                    href={`http://${process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost:3000'}/${url.shortCode
-                                                        }`}
+                                                    href={`${protocol}${host}/${url.shortCode}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="text-teal-400 hover:underline"
                                                 >
-                                                    {`http://${process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost:3000'}/${url.shortCode
-                                                        }`}
+                                                    {`${protocol}${host}/${url.shortCode}`}
                                                 </a>
                                             </p>
 
