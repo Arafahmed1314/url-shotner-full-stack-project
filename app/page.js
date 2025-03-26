@@ -34,6 +34,7 @@ export default function Page() {
       setError('Failed to shorten URL');
     } finally {
       setIsAnimating(false);
+      setUrl("");
     }
   };
 
@@ -93,7 +94,7 @@ export default function Page() {
                 </div>
 
                 {/* Password Protection Toggle */}
-                <div className="flex items-center justify-center gap-4">
+                {url && (<div className="flex items-center justify-center gap-4">
                   <button
                     type="button"
                     onClick={togglePasswordProtection}
@@ -105,7 +106,8 @@ export default function Page() {
                     {isProtected ? '🔒' : '🔓'}
                     {isProtected ? 'Password Protected' : 'Add Password Protection'}
                   </button>
-                </div>
+                </div>)}
+
 
                 {/* Password Input */}
                 {isProtected && (
@@ -131,7 +133,7 @@ export default function Page() {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className={`w-full md:w-auto px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl font-medium text-white hover:opacity-90 transform transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400 flex items-center justify-center gap-2 ${isAnimating ? 'animate-pulse' : ''
+                  className={`w-full md:w-auto px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl font-medium text-white hover:opacity-90 transform transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-400 flex items-center justify-center gap-2 cursor-pointer ${isAnimating ? 'animate-pulse' : ''
                     }`}
                 >
                   Shorten URL
@@ -152,7 +154,7 @@ export default function Page() {
                     onClick={() => navigator.clipboard.writeText(shortUrl)}
                     className="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
                   >
-                    <span className="text-white">📋</span>
+                    <span className="text-white cursor-pointer">📋</span>
                   </button>
                 </div>
               )}

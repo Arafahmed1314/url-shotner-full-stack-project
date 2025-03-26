@@ -48,12 +48,13 @@ export async function POST(request) {
         // Hash password if provided
         const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
 
-        // Save to MongoDB
+        // Save to MongoDB with a clicks field initialized to 0
         await db.collection('urls').insertOne({
             shortCode,
             originalUrl: formattedUrl,
             password: hashedPassword,
             createdAt: new Date(),
+            clicks: 0, // Initialize clicks to 0
         });
 
         // Return the short URL
