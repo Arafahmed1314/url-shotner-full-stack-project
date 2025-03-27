@@ -1,5 +1,5 @@
 import { connectToDatabase } from '../../lib/mongodb';
-import { headers } from 'next/headers'; // Import headers to get the current host
+import { headers } from 'next/headers';
 
 export default async function DashboardPage() {
     let urls = [];
@@ -16,7 +16,6 @@ export default async function DashboardPage() {
     // Get the current host from the headers
     const headersList = headers();
     const host = headersList.get('host');
-    // Determine the protocol based on the environment
     const protocol = process.env.NODE_ENV === 'production' ? 'https://' : 'http://';
 
     return (
@@ -50,7 +49,6 @@ export default async function DashboardPage() {
             {/* Main Content */}
             <main className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-5xl mx-auto">
-                    {/* Header */}
                     <h1 className="text-4xl sm:text-5xl font-extrabold text-white text-center mb-12 tracking-tight">
                         Analytics Dashboard
                     </h1>
@@ -100,6 +98,16 @@ export default async function DashboardPage() {
                                             <p className="text-white text-lg">
                                                 <span className="font-semibold text-gray-300">Clicks:</span>{' '}
                                                 <span className="text-teal-400 font-bold text-xl">{url.clicks || 0}</span>
+                                            </p>
+
+                                            {/* Expiration Date */}
+                                            <p className="text-white text-lg">
+                                                <span className="font-semibold text-gray-300">Expires On:</span>{' '}
+                                                <span className="text-gray-400">
+                                                    {url.expirationDate
+                                                        ? new Date(url.expirationDate).toLocaleDateString()
+                                                        : 'Never'}
+                                                </span>
                                             </p>
 
                                             {/* Password Protected */}

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import { useState } from 'react';
@@ -6,8 +5,9 @@ import Features from './components/Features';
 
 export default function Page() {
   const [url, setUrl] = useState('');
-  const [customCode, setCustomCode] = useState(''); // New state for custom short code
+  const [customCode, setCustomCode] = useState('');
   const [password, setPassword] = useState('');
+  const [expirationDate, setExpirationDate] = useState(''); // New state for expiration date
   const [shortUrl, setShortUrl] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -23,12 +23,17 @@ export default function Page() {
       const res = await fetch('/api/shorten', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url, customCode, password: isProtected ? password : null }),
+        body: JSON.stringify({
+          url,
+          customCode,
+          password: isProtected ? password : null,
+          expirationDate, // Include expiration date in the request
+        }),
       });
       const data = await res.json();
 
       if (res.ok) {
-        setShortUrl(`http://${data.shortUrl}`);
+        setShortUrl(data.shortUrl);
       } else {
         setError(data.message || 'Something went wrong');
       }
@@ -37,7 +42,8 @@ export default function Page() {
     } finally {
       setIsAnimating(false);
       setUrl('');
-      setCustomCode(''); // Reset custom code after submission
+      setCustomCode('');
+      setExpirationDate(''); // Reset expiration date after submission
     }
   };
 
@@ -47,6 +53,9 @@ export default function Page() {
       setPassword('');
     }
   };
+
+  // Get the minimum date for the expiration input (today)
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
@@ -121,6 +130,22 @@ export default function Page() {
                   </div>
                 )}
 
+                {/* Expiration Date Input */}
+                {url && (
+                  <div className="flex flex-col gap-2">
+                    <input
+                      type="date"
+                      value={expirationDate}
+                      onChange={(e) => setExpirationDate(e.target.value)}
+                      min={today} // Prevent selecting past dates
+                      className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-all duration-200"
+                    />
+                    <p className="text-white/70 text-sm text-left">
+                      Set an expiration date (optional). Leave blank for a default of 30 days.
+                    </p>
+                  </div>
+                )}
+
                 {/* Password Protection Toggle */}
                 {url && (
                   <div className="flex items-center justify-center gap-4">
@@ -128,8 +153,8 @@ export default function Page() {
                       type="button"
                       onClick={togglePasswordProtection}
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${isProtected
-                        ? 'bg-pink-500/20 text-pink-200'
-                        : 'bg-white/5 text-white/70 hover:bg-white/10'
+                          ? 'bg-pink-500/20 text-pink-200'
+                          : 'bg-white/5 text-white/70 hover:bg-white/10'
                         }`}
                     >
                       {isProtected ? '🔒' : '🔓'}

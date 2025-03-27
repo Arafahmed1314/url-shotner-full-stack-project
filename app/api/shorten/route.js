@@ -12,7 +12,7 @@ function generateShortCode(length = 6) {
 }
 
 export async function POST(request) {
-    const { url, customCode, password } = await request.json();
+    const { url, customCode, password, expirationDate } = await request.json();
 
     // Ensure the URL has a protocol (http:// or https://)
     let formattedUrl = url;
@@ -33,7 +33,9 @@ export async function POST(request) {
 
         if (existingUrl) {
             // If the URL already exists, return the existing short URL
-            const shortUrl = `${request.headers.get('host')}/${existingUrl.shortCode}`;
+            const protocol = process.env.NODE_ENV === 'production' ? 'https://' : 'http://';
+            const host = request.headers.get('host');
+            const shortUrl = `${protocol}${host}/${existingUrl.shortCode}`;
             return NextResponse.json({ shortUrl, message: 'URL already shortened' });
         }
 
@@ -67,17 +69,31 @@ export async function POST(request) {
         // Hash password if provided
         const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
 
+        // Set the expiration date
+        let expiration;
+        if (expirationDate) {
+            // Use the user-specified expiration date
+            expiration = new Date(expirationDate);
+        } else {
+            // Set default expiration to 30 days from now
+            expiration = new Date();
+            expiration.setDate(expiration.getDate() + 30);
+        }
+
         // Save to MongoDB
         await db.collection('urls').insertOne({
             shortCode,
             originalUrl: formattedUrl,
             password: hashedPassword,
             createdAt: new Date(),
+            expirationDate: expiration, // Store the expiration date
             clicks: 0,
         });
 
-        // Return the short URL
-        const shortUrl = `${request.headers.get('host')}/${shortCode}`;
+        // Return the short URL with the correct protocol
+        const protocol = process.env.NODE_ENV === 'production' ? 'https://' : 'http://';
+        const host = request.headers.get('host');
+        const shortUrl = `${protocol}${host}/${shortCode}`;
         return NextResponse.json({ shortUrl });
     } catch (error) {
         return NextResponse.json({ message: 'Server error', error }, { status: 500 });

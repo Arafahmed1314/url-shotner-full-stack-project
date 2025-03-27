@@ -17,15 +17,28 @@ export default async function PasswordPage({ params }) {
         const { db } = await connectToDatabase();
         urlDoc = await db.collection('urls').findOne(
             { shortCode: code },
-            { projection: { shortCode: 1, originalUrl: 1, password: 1 } }
+            { projection: { shortCode: 1, originalUrl: 1, password: 1, expirationDate: 1 } }
         );
 
         // If the URL exists, increment the clicks counter
         if (urlDoc) {
-            await db.collection('urls').updateOne(
-                { shortCode: code },
-                { $inc: { clicks: 1 } } // Increment clicks by 1
-            );
+            // Check for expiration
+            if (urlDoc.expirationDate) {
+                const currentDate = new Date();
+                const expirationDate = new Date(urlDoc.expirationDate);
+                if (currentDate > expirationDate) {
+                    error = 'This URL has expired';
+                    urlDoc = null; // Prevent further processing
+                }
+            }
+
+            // If the URL is not expired, increment clicks
+            if (urlDoc) {
+                await db.collection('urls').updateOne(
+                    { shortCode: code },
+                    { $inc: { clicks: 1 } }
+                );
+            }
         }
     } catch (err) {
         console.error('Error fetching URL document:', err);
