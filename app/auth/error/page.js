@@ -1,10 +1,11 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useTheme } from '../../contexts/ThemeContext';
 
-export default function AuthError() {
+function AuthErrorContent() {
     const { isDarkMode } = useTheme();
     const searchParams = useSearchParams();
     const error = searchParams.get('error');
@@ -65,5 +66,17 @@ export default function AuthError() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function AuthError() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-blue-900">
+                <div className="text-white text-xl">Loading...</div>
+            </div>
+        }>
+            <AuthErrorContent />
+        </Suspense>
     );
 }
