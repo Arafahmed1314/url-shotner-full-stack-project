@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Features from './components/Features';
 import ThemeToggle from './components/ThemeToggle';
+import LoginButton from './components/LoginButton';
 import { useTheme } from './contexts/ThemeContext';
 
 export default function Page() {
@@ -103,16 +104,7 @@ export default function Page() {
                 Contact
               </a>
               <ThemeToggle />
-              <a
-                href="#"
-                className={`px-4 py-2 rounded-full font-medium transition-all duration-200 transform hover:scale-105 ${
-                  isDarkMode
-                    ? 'bg-blue-600 text-white hover:bg-blue-700'
-                    : 'bg-white text-purple-600 hover:bg-opacity-90'
-                }`}
-              >
-                Login
-              </a>
+              <LoginButton />
             </div>
             <div className="md:hidden">
               <ThemeToggle />

@@ -2,6 +2,8 @@ import { connectToDatabase } from '../../../lib/mongodb';
 import { getBaseUrl } from '../../../lib/utils';
 import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]/route';
 
 function generateShortCode(length = 6) {
     const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -14,6 +16,9 @@ function generateShortCode(length = 6) {
 
 export async function POST(request) {
     const { url, customCode, password, expirationDate } = await request.json();
+
+    // Get user session
+    const session = await getServerSession(authOptions);
 
     // Ensure the URL has a protocol (http:// or https://)
     let formattedUrl = url;
@@ -88,6 +93,9 @@ export async function POST(request) {
             createdAt: new Date(),
             expirationDate: expiration, // Store the expiration date
             clicks: 0,
+            userId: session?.user?.email || null, // Associate with user if logged in
+            userImage: session?.user?.image || null,
+            userName: session?.user?.name || null,
         });
 
         // Return the short URL with the correct protocol
