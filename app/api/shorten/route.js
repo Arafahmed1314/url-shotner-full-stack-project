@@ -43,7 +43,7 @@ export async function POST(request) {
         let shortCode;
 
         // If a custom code is provided, validate and use it
-        if (customCode) {
+        if (customCode && customCode.trim() !== '') {
             // Validate the custom code: alphanumeric, 3-15 characters
             if (!customCode.match(/^[a-zA-Z0-9]{3,15}$/)) {
                 return NextResponse.json(

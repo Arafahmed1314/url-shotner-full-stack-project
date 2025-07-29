@@ -11,8 +11,14 @@
 !.yarn/versions
 node_modules
 .next
+
+# Environment variables - NEVER commit these!
+.env
 .env.local
 .env.*.local
+.env.development
+.env.production
+
 # testing
 /coverage
 
