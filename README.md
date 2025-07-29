@@ -111,23 +111,27 @@ public/                  # Static assets
 ## Features in Detail
 
 ### URL Shortening
+
 - Custom short codes (3-15 characters)
 - Automatic random code generation
 - Duplicate URL detection
 - URL validation and formatting
 
 ### Security
+
 - Password protection with bcrypt hashing
 - Input validation and sanitization
 - Secure environment variable handling
 
 ### Analytics
+
 - Click tracking
 - Sortable by clicks, date, or code
 - Filterable by password protection and expiration
 - Real-time data refresh
 
 ### Dark Mode
+
 - System preference detection
 - Persistent user preference
 - Smooth animations and transitions

@@ -64,17 +64,15 @@ export default function Page() {
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div className={`min-h-screen transition-all duration-500 ${
-      isDarkMode 
-        ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900' 
+    <div className={`min-h-screen transition-all duration-500 ${isDarkMode
+        ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900'
         : 'bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500'
-    }`}>
-      {/* Navigation Bar */}
-      <nav className={`backdrop-blur-md fixed w-full top-0 z-50 transition-all duration-300 ${
-        isDarkMode 
-          ? 'bg-gray-900/20 border-b border-gray-700/20' 
-          : 'bg-white/10'
       }`}>
+      {/* Navigation Bar */}
+      <nav className={`backdrop-blur-md fixed w-full top-0 z-50 transition-all duration-300 ${isDarkMode
+          ? 'bg-gray-900/20 border-b border-gray-700/20'
+          : 'bg-white/10'
+        }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-2">
@@ -82,25 +80,22 @@ export default function Page() {
               <span className="text-white font-bold text-xl">URLify</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#" className={`font-medium transition-colors duration-200 ${
-                isDarkMode 
-                  ? 'text-gray-300 hover:text-blue-400' 
+              <a href="#" className={`font-medium transition-colors duration-200 ${isDarkMode
+                  ? 'text-gray-300 hover:text-blue-400'
                   : 'text-white hover:text-pink-200'
-              }`}>
+                }`}>
                 Home
               </a>
-              <Link href="/dashboard" className={`font-medium transition-colors duration-200 ${
-                isDarkMode 
-                  ? 'text-gray-300 hover:text-blue-400' 
+              <Link href="/dashboard" className={`font-medium transition-colors duration-200 ${isDarkMode
+                  ? 'text-gray-300 hover:text-blue-400'
                   : 'text-white hover:text-pink-200'
-              }`}>
+                }`}>
                 Dashboard
               </Link>
-              <a href="#" className={`font-medium transition-colors duration-200 ${
-                isDarkMode 
-                  ? 'text-gray-300 hover:text-blue-400' 
+              <a href="#" className={`font-medium transition-colors duration-200 ${isDarkMode
+                  ? 'text-gray-300 hover:text-blue-400'
                   : 'text-white hover:text-pink-200'
-              }`}>
+                }`}>
                 Contact
               </a>
               <ThemeToggle />
@@ -126,11 +121,10 @@ export default function Page() {
 
           {/* URL Input Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className={`backdrop-blur-lg p-8 rounded-2xl shadow-2xl transition-all duration-300 ${
-              isDarkMode 
-                ? 'bg-gray-800/30 border border-gray-600/30' 
+            <div className={`backdrop-blur-lg p-8 rounded-2xl shadow-2xl transition-all duration-300 ${isDarkMode
+                ? 'bg-gray-800/30 border border-gray-600/30'
                 : 'bg-white/10'
-            }`}>
+              }`}>
               <div className="flex flex-col space-y-4">
                 {/* URL Input */}
                 <div className="flex flex-col md:flex-row gap-4">
@@ -139,11 +133,10 @@ export default function Page() {
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="Paste your long URL here..."
-                    className={`flex-1 px-6 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all duration-200 ${
-                      isDarkMode
+                    className={`flex-1 px-6 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all duration-200 ${isDarkMode
                         ? 'bg-gray-700/30 border-gray-600/30 text-white placeholder-gray-400 focus:ring-blue-400'
                         : 'bg-white/5 border-white/10 text-white placeholder-white/50 focus:ring-pink-400'
-                    }`}
+                      }`}
                     required
                   />
                 </div>
@@ -156,11 +149,10 @@ export default function Page() {
                       value={customCode}
                       onChange={(e) => setCustomCode(e.target.value)}
                       placeholder="Custom short code (optional)"
-                      className={`w-full px-6 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all duration-200 ${
-                        isDarkMode
+                      className={`w-full px-6 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all duration-200 ${isDarkMode
                           ? 'bg-gray-700/30 border-gray-600/30 text-white placeholder-gray-400 focus:ring-blue-400'
                           : 'bg-white/5 border-white/10 text-white placeholder-white/50 focus:ring-pink-400'
-                      }`}
+                        }`}
                     />
                     <p className={`text-sm text-left ${isDarkMode ? 'text-gray-400' : 'text-white/70'}`}>
                       Enter a custom code (e.g., "mycustomcode"). Leave blank for a random code.
@@ -176,11 +168,10 @@ export default function Page() {
                       value={expirationDate}
                       onChange={(e) => setExpirationDate(e.target.value)}
                       min={today} // Prevent selecting past dates
-                      className={`w-full px-6 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all duration-200 ${
-                        isDarkMode
+                      className={`w-full px-6 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all duration-200 ${isDarkMode
                           ? 'bg-gray-700/30 border-gray-600/30 text-white placeholder-gray-400 focus:ring-blue-400'
                           : 'bg-white/5 border-white/10 text-white placeholder-white/50 focus:ring-pink-400'
-                      }`}
+                        }`}
                     />
                     <p className={`text-sm text-left ${isDarkMode ? 'text-gray-400' : 'text-white/70'}`}>
                       Set an expiration date (optional). Leave blank for a default of 30 days.
@@ -195,7 +186,7 @@ export default function Page() {
                       type="button"
                       onClick={togglePasswordProtection}
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${isProtected
-                        ? isDarkMode 
+                        ? isDarkMode
                           ? 'bg-blue-500/20 text-blue-300 border border-blue-400/30'
                           : 'bg-pink-500/20 text-pink-200'
                         : isDarkMode
@@ -217,19 +208,17 @@ export default function Page() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter password for protection..."
-                      className={`w-full px-6 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all duration-200 ${
-                        isDarkMode
+                      className={`w-full px-6 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all duration-200 ${isDarkMode
                           ? 'bg-gray-700/30 border-gray-600/30 text-white placeholder-gray-400 focus:ring-blue-400'
                           : 'bg-white/5 border-white/10 text-white placeholder-white/50 focus:ring-pink-400'
-                      }`}
+                        }`}
                       required={isProtected}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className={`absolute right-4 top-1/2 transform -translate-y-1/2 transition-colors duration-200 ${
-                        isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-white/50 hover:text-white/80'
-                      }`}
+                      className={`absolute right-4 top-1/2 transform -translate-y-1/2 transition-colors duration-200 ${isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-white/50 hover:text-white/80'
+                        }`}
                     >
                       {showPassword ? '👁️‍🗨️' : '👁️'}
                     </button>
@@ -239,11 +228,10 @@ export default function Page() {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className={`w-full md:w-auto px-8 py-4 rounded-xl font-medium text-white transform transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 flex items-center justify-center gap-2 cursor-pointer ${
-                    isDarkMode
+                  className={`w-full md:w-auto px-8 py-4 rounded-xl font-medium text-white transform transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 flex items-center justify-center gap-2 cursor-pointer ${isDarkMode
                       ? 'bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 focus:ring-blue-400'
                       : 'bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 focus:ring-purple-400'
-                  } ${isAnimating ? 'animate-pulse' : ''}`}
+                    } ${isAnimating ? 'animate-pulse' : ''}`}
                 >
                   Shorten URL
                   <span>➡️</span>
@@ -252,11 +240,10 @@ export default function Page() {
 
               {/* Result Section */}
               {shortUrl && (
-                <div className={`mt-6 p-4 rounded-xl border flex items-center justify-between animate-fade-in ${
-                  isDarkMode 
-                    ? 'bg-gray-700/30 border-gray-600/30' 
+                <div className={`mt-6 p-4 rounded-xl border flex items-center justify-between animate-fade-in ${isDarkMode
+                    ? 'bg-gray-700/30 border-gray-600/30'
                     : 'bg-white/5 border-white/10'
-                }`}>
+                  }`}>
                   <div className="flex items-center gap-2 text-white">
                     <span>🌐</span>
                     <span>{shortUrl}</span>
@@ -265,9 +252,8 @@ export default function Page() {
                   <button
                     type="button"
                     onClick={() => navigator.clipboard.writeText(shortUrl)}
-                    className={`p-2 rounded-lg transition-colors duration-200 ${
-                      isDarkMode ? 'hover:bg-gray-600/30' : 'hover:bg-white/10'
-                    }`}
+                    className={`p-2 rounded-lg transition-colors duration-200 ${isDarkMode ? 'hover:bg-gray-600/30' : 'hover:bg-white/10'
+                      }`}
                   >
                     <span className="text-white cursor-pointer">📋</span>
                   </button>
@@ -276,11 +262,10 @@ export default function Page() {
 
               {/* Error Message */}
               {error && (
-                <div className={`mt-4 p-4 rounded-xl border animate-fade-in ${
-                  isDarkMode 
+                <div className={`mt-4 p-4 rounded-xl border animate-fade-in ${isDarkMode
                     ? 'bg-red-900/30 border-red-600/30 text-red-300'
                     : 'bg-red-500/20 border-red-500/30 text-pink-200'
-                }`}>
+                  }`}>
                   {error}
                 </div>
               )}

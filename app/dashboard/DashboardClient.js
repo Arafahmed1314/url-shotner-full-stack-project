@@ -75,17 +75,15 @@ export default function DashboardClient({ initialUrls, error: initialError, host
         });
 
     return (
-        <div className={`min-h-screen transition-all duration-500 ${
-            isDarkMode 
-                ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900' 
+        <div className={`min-h-screen transition-all duration-500 ${isDarkMode
+                ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900'
                 : 'bg-gradient-to-br from-gray-900 to-blue-900'
-        }`}>
-            {/* Navigation Bar */}
-            <nav className={`backdrop-blur-md fixed w-full top-0 z-50 transition-all duration-300 ${
-                isDarkMode 
-                    ? 'bg-gray-900/20 border-b border-gray-700/20' 
-                    : 'bg-white/10'
             }`}>
+            {/* Navigation Bar */}
+            <nav className={`backdrop-blur-md fixed w-full top-0 z-50 transition-all duration-300 ${isDarkMode
+                    ? 'bg-gray-900/20 border-b border-gray-700/20'
+                    : 'bg-white/10'
+                }`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center space-x-2">
@@ -95,21 +93,19 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                         <div className="flex items-center space-x-8">
                             <Link
                                 href="/"
-                                className={`font-medium transition-colors duration-300 ${
-                                    isDarkMode 
-                                        ? 'text-gray-300 hover:text-blue-400' 
+                                className={`font-medium transition-colors duration-300 ${isDarkMode
+                                        ? 'text-gray-300 hover:text-blue-400'
                                         : 'text-gray-300 hover:text-teal-400'
-                                }`}
+                                    }`}
                             >
                                 Home
                             </Link>
                             <Link
                                 href="/dashboard"
-                                className={`font-medium transition-colors duration-300 ${
-                                    isDarkMode 
-                                        ? 'text-gray-300 hover:text-blue-400' 
+                                className={`font-medium transition-colors duration-300 ${isDarkMode
+                                        ? 'text-gray-300 hover:text-blue-400'
                                         : 'text-gray-300 hover:text-teal-400'
-                                }`}
+                                    }`}
                             >
                                 Dashboard
                             </Link>
@@ -135,11 +131,10 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                                 <select
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value)}
-                                    className={`px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 ${
-                                        isDarkMode
+                                    className={`px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 ${isDarkMode
                                             ? 'bg-gray-800 border-gray-600 text-white focus:ring-blue-400 [&>option]:bg-gray-800 [&>option]:text-white'
                                             : 'bg-white/10 border-white/20 text-white focus:ring-teal-400 [&>option]:bg-gray-800 [&>option]:text-white'
-                                    }`}
+                                        }`}
                                 >
                                     <option value="clicks">Clicks</option>
                                     <option value="shortCode">Short Code</option>
@@ -151,11 +146,10 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                                 <select
                                     value={sortOrder}
                                     onChange={(e) => setSortOrder(e.target.value)}
-                                    className={`px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 ${
-                                        isDarkMode
+                                    className={`px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 ${isDarkMode
                                             ? 'bg-gray-800 border-gray-600 text-white focus:ring-blue-400 [&>option]:bg-gray-800 [&>option]:text-white'
                                             : 'bg-white/10 border-white/20 text-white focus:ring-teal-400 [&>option]:bg-gray-800 [&>option]:text-white'
-                                    }`}
+                                        }`}
                                 >
                                     <option value="desc">Descending</option>
                                     <option value="asc">Ascending</option>
@@ -168,11 +162,10 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                                 <select
                                     value={filter}
                                     onChange={(e) => setFilter(e.target.value)}
-                                    className={`px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 ${
-                                        isDarkMode
+                                    className={`px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 ${isDarkMode
                                             ? 'bg-gray-800 border-gray-600 text-white focus:ring-blue-400 [&>option]:bg-gray-800 [&>option]:text-white'
                                             : 'bg-white/10 border-white/20 text-white focus:ring-teal-400 [&>option]:bg-gray-800 [&>option]:text-white'
-                                    }`}
+                                        }`}
                                 >
                                     <option value="all">All</option>
                                     <option value="passwordProtected">Password Protected</option>
@@ -181,11 +174,10 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                             </div>
                             <button
                                 onClick={fetchData}
-                                className={`px-4 py-2 cursor-pointer rounded-lg text-white transition-colors duration-200 ${
-                                    isDarkMode
+                                className={`px-4 py-2 cursor-pointer rounded-lg text-white transition-colors duration-200 ${isDarkMode
                                         ? 'bg-blue-600 hover:bg-blue-700'
                                         : 'bg-teal-500 hover:bg-teal-600'
-                                }`}
+                                    }`}
                             >
                                 Refresh
                             </button>
@@ -193,17 +185,15 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                     </div>
 
                     {error ? (
-                        <div className={`p-6 rounded-2xl border text-center text-lg ${
-                            isDarkMode 
+                        <div className={`p-6 rounded-2xl border text-center text-lg ${isDarkMode
                                 ? 'bg-red-900/30 border-red-600/30 text-red-300'
                                 : 'bg-red-500/20 border-red-500/30 text-red-200'
-                        }`}>
+                            }`}>
                             {error}
                             <Link
                                 href="/"
-                                className={`block mt-4 hover:underline ${
-                                    isDarkMode ? 'text-blue-400' : 'text-teal-400'
-                                }`}
+                                className={`block mt-4 hover:underline ${isDarkMode ? 'text-blue-400' : 'text-teal-400'
+                                    }`}
                             >
                                 Back to Home
                             </Link>
@@ -218,11 +208,10 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                                 sortedAndFilteredUrls.map((url) => (
                                     <div
                                         key={url.shortCode}
-                                        className={`backdrop-blur-md border rounded-2xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl ${
-                                            isDarkMode
+                                        className={`backdrop-blur-md border rounded-2xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl ${isDarkMode
                                                 ? 'bg-gray-800/30 border-gray-600/30 hover:bg-gray-700/40'
                                                 : 'bg-white/10 border-white/20 hover:bg-white/20'
-                                        }`}
+                                            }`}
                                     >
                                         <div className="space-y-3">
                                             {/* Short URL with Copy Button */}
@@ -232,17 +221,15 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                                                     href={`${protocol}${host}/${url.shortCode}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className={`hover:underline ${
-                                                        isDarkMode ? 'text-blue-400' : 'text-teal-400'
-                                                    }`}
+                                                    className={`hover:underline ${isDarkMode ? 'text-blue-400' : 'text-teal-400'
+                                                        }`}
                                                 >
                                                     {`${protocol}${host}/${url.shortCode}`}
                                                 </a>
                                                 <button
                                                     onClick={() => copyToClipboard(`${protocol}${host}/${url.shortCode}`)}
-                                                    className={`ml-2 cursor-pointer transition-colors duration-200 ${
-                                                        isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-teal-400 hover:text-teal-300'
-                                                    }`}
+                                                    className={`ml-2 cursor-pointer transition-colors duration-200 ${isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-teal-400 hover:text-teal-300'
+                                                        }`}
                                                     title="Copy to clipboard"
                                                 >
                                                     📋
@@ -256,9 +243,8 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                                                     href={url.originalUrl}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className={`hover:underline break-all ${
-                                                        isDarkMode ? 'text-blue-400' : 'text-teal-400'
-                                                    }`}
+                                                    className={`hover:underline break-all ${isDarkMode ? 'text-blue-400' : 'text-teal-400'
+                                                        }`}
                                                 >
                                                     {url.originalUrl}
                                                 </a>
@@ -267,9 +253,8 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                                             {/* Clicks */}
                                             <p className="text-white text-lg">
                                                 <span className={`font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-300'}`}>Clicks:</span>{' '}
-                                                <span className={`font-bold text-xl ${
-                                                    isDarkMode ? 'text-blue-400' : 'text-teal-400'
-                                                }`}>{url.clicks || 0}</span>
+                                                <span className={`font-bold text-xl ${isDarkMode ? 'text-blue-400' : 'text-teal-400'
+                                                    }`}>{url.clicks || 0}</span>
                                             </p>
 
                                             {/* Expiration Date */}
@@ -287,7 +272,7 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                                                 <span className={`font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-300'}`}>Password Protected:</span>{' '}
                                                 <span
                                                     className={
-                                                        url.password 
+                                                        url.password
                                                             ? isDarkMode ? 'text-yellow-300 font-medium' : 'text-yellow-400 font-medium'
                                                             : isDarkMode ? 'text-gray-400' : 'text-gray-400'
                                                     }

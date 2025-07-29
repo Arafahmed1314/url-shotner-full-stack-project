@@ -1,19 +1,23 @@
 # Production Environment Variables for Vercel
 
 ## Required Environment Variables:
+
 Add these to your Vercel project dashboard:
 
 ### 1. Database
+
 ```
 MONGODB_URI=your_mongodb_connection_string_here
 ```
 
 ### 2. Domain Configuration
+
 ```
 NEXT_PUBLIC_DOMAIN=urlify-orcin.vercel.app
 ```
 
 ### 3. Authentication (if using NextAuth)
+
 ```
 JWT_SECRET=your_jwt_secret_here
 NEXTAUTH_SECRET=your_nextauth_secret_here
@@ -21,6 +25,7 @@ NEXTAUTH_URL=https://urlify-orcin.vercel.app
 ```
 
 ### 4. Google OAuth (if using)
+
 ```
 GOOGLE_CLIENT_ID=your_google_client_id_here
 GOOGLE_CLIENT_SECRET=your_google_client_secret_here
@@ -46,6 +51,7 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret_here
 ## Testing:
 
 After deployment, test with a short URL like:
+
 - Input: https://google.com
 - Custom code: test123
 - Expected output: https://urlify-orcin.vercel.app/test123

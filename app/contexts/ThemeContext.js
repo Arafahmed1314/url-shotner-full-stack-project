@@ -11,7 +11,7 @@ export function ThemeProvider({ children }) {
         // Check for saved theme preference or default to system preference
         const savedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
+
         if (savedTheme) {
             setIsDarkMode(savedTheme === 'dark');
         } else {

@@ -19,28 +19,25 @@ export default function SignIn() {
 
     if (isLoading) {
         return (
-            <div className={`min-h-screen flex items-center justify-center ${
-                isDarkMode 
-                    ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900' 
+            <div className={`min-h-screen flex items-center justify-center ${isDarkMode
+                    ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900'
                     : 'bg-gradient-to-br from-gray-900 to-blue-900'
-            }`}>
+                }`}>
                 <div className="text-white text-xl">Loading...</div>
             </div>
         );
     }
 
     return (
-        <div className={`min-h-screen transition-all duration-500 ${
-            isDarkMode 
-                ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900' 
+        <div className={`min-h-screen transition-all duration-500 ${isDarkMode
+                ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900'
                 : 'bg-gradient-to-br from-gray-900 to-blue-900'
-        }`}>
+            }`}>
             <div className="min-h-screen flex items-center justify-center px-4">
-                <div className={`max-w-md w-full space-y-8 p-8 rounded-2xl backdrop-blur-md border ${
-                    isDarkMode
+                <div className={`max-w-md w-full space-y-8 p-8 rounded-2xl backdrop-blur-md border ${isDarkMode
                         ? 'bg-gray-800/30 border-gray-600/30'
                         : 'bg-white/10 border-white/20'
-                }`}>
+                    }`}>
                     <div className="text-center">
                         <div className="flex items-center justify-center space-x-2 mb-4">
                             <span className="text-white text-3xl">🔗</span>
@@ -49,9 +46,8 @@ export default function SignIn() {
                         <h2 className="text-3xl font-extrabold text-white">
                             Welcome back
                         </h2>
-                        <p className={`mt-2 text-sm ${
-                            isDarkMode ? 'text-gray-300' : 'text-gray-300'
-                        }`}>
+                        <p className={`mt-2 text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-300'
+                            }`}>
                             Sign in to your account to access your dashboard
                         </p>
                     </div>
@@ -59,11 +55,10 @@ export default function SignIn() {
                     <div className="space-y-4">
                         <button
                             onClick={() => login('google')}
-                            className={`w-full flex justify-center items-center space-x-3 py-3 px-4 rounded-lg font-medium transition-all duration-200 hover:scale-105 ${
-                                isDarkMode
+                            className={`w-full flex justify-center items-center space-x-3 py-3 px-4 rounded-lg font-medium transition-all duration-200 hover:scale-105 ${isDarkMode
                                     ? 'bg-white text-gray-900 hover:bg-gray-100'
                                     : 'bg-white text-gray-900 hover:bg-gray-50 border border-gray-300'
-                            }`}
+                                }`}
                         >
                             <svg className="w-5 h-5" viewBox="0 0 24 24">
                                 <path
@@ -89,9 +84,8 @@ export default function SignIn() {
                         <div className="text-center">
                             <Link
                                 href="/"
-                                className={`text-sm hover:underline ${
-                                    isDarkMode ? 'text-blue-400' : 'text-teal-400'
-                                }`}
+                                className={`text-sm hover:underline ${isDarkMode ? 'text-blue-400' : 'text-teal-400'
+                                    }`}
                             >
                                 Back to Home
                             </Link>

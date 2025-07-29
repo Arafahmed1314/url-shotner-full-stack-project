@@ -1,9 +1,7 @@
-import { connectToDatabase } from '../../../lib/mongodb';
 import { getBaseUrl } from '../../../lib/utils';
 import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
 
 function generateShortCode(length = 6) {
     const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -17,9 +15,6 @@ function generateShortCode(length = 6) {
 export async function POST(request) {
     const { url, customCode, password, expirationDate } = await request.json();
 
-    // Get user session
-    const session = await getServerSession(authOptions);
-
     // Ensure the URL has a protocol (http:// or https://)
     let formattedUrl = url;
     if (!formattedUrl.match(/^(http|https):\/\//)) {
@@ -32,6 +27,26 @@ export async function POST(request) {
     }
 
     try {
+        // Check if MongoDB is properly configured
+        if (!process.env.MONGODB_URI || 
+            process.env.MONGODB_URI === 'your_mongodb_connection_string_here' || 
+            !process.env.MONGODB_URI.startsWith('mongodb')) {
+            return NextResponse.json({ 
+                message: 'Database not configured. Please set up MongoDB connection.' 
+            }, { status: 500 });
+        }
+
+        // Dynamic imports to avoid loading when not configured
+        const [
+            { connectToDatabase },
+            { authOptions }
+        ] = await Promise.all([
+            import('../../../lib/mongodb'),
+            import('../auth/[...nextauth]/route')
+        ]);
+
+        // Get user session
+        const session = await getServerSession(authOptions);
         const { db } = await connectToDatabase();
 
         // Check if the long URL already exists in the database
