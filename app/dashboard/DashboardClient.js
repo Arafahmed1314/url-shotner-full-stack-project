@@ -135,8 +135,8 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                                     onChange={(e) => setSortBy(e.target.value)}
                                     className={`px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 ${
                                         isDarkMode
-                                            ? 'bg-gray-700/30 border-gray-600/30 text-white focus:ring-blue-400'
-                                            : 'bg-white/5 border-white/10 text-white focus:ring-teal-400'
+                                            ? 'bg-gray-800 border-gray-600 text-white focus:ring-blue-400 [&>option]:bg-gray-800 [&>option]:text-white'
+                                            : 'bg-white/10 border-white/20 text-white focus:ring-teal-400 [&>option]:bg-gray-800 [&>option]:text-white'
                                     }`}
                                 >
                                     <option value="clicks">Clicks</option>
@@ -151,8 +151,8 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                                     onChange={(e) => setSortOrder(e.target.value)}
                                     className={`px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 ${
                                         isDarkMode
-                                            ? 'bg-gray-700/30 border-gray-600/30 text-white focus:ring-blue-400'
-                                            : 'bg-white/5 border-white/10 text-white focus:ring-teal-400'
+                                            ? 'bg-gray-800 border-gray-600 text-white focus:ring-blue-400 [&>option]:bg-gray-800 [&>option]:text-white'
+                                            : 'bg-white/10 border-white/20 text-white focus:ring-teal-400 [&>option]:bg-gray-800 [&>option]:text-white'
                                     }`}
                                 >
                                     <option value="desc">Descending</option>
@@ -168,8 +168,8 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                                     onChange={(e) => setFilter(e.target.value)}
                                     className={`px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 ${
                                         isDarkMode
-                                            ? 'bg-gray-700/30 border-gray-600/30 text-white focus:ring-blue-400'
-                                            : 'bg-white/5 border-white/10 text-white focus:ring-teal-400'
+                                            ? 'bg-gray-800 border-gray-600 text-white focus:ring-blue-400 [&>option]:bg-gray-800 [&>option]:text-white'
+                                            : 'bg-white/10 border-white/20 text-white focus:ring-teal-400 [&>option]:bg-gray-800 [&>option]:text-white'
                                     }`}
                                 >
                                     <option value="all">All</option>
