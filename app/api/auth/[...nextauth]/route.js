@@ -89,10 +89,12 @@ function createAuthOptions() {
         },
         secret: process.env.NEXTAUTH_SECRET,
         debug: process.env.NODE_ENV === 'development',
-        // Fix for localhost development
-        ...(process.env.NODE_ENV === 'development' && {
-            url: 'http://localhost:3000',
-        }),
+        // Dynamic URL configuration based on environment
+        url: process.env.NEXTAUTH_URL || (
+            process.env.NODE_ENV === 'development' 
+                ? 'http://localhost:3000' 
+                : 'https://urlify-orcin.vercel.app'
+        ),
     };
 
     return authOptions;
