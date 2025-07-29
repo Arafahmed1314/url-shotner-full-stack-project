@@ -2,6 +2,7 @@ import { getBaseUrl } from '../../../lib/utils';
 import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]/route';
 
 function generateShortCode(length = 6) {
     const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -36,14 +37,8 @@ export async function POST(request) {
             }, { status: 500 });
         }
 
-        // Dynamic imports to avoid loading when not configured
-        const [
-            { connectToDatabase },
-            { authOptions }
-        ] = await Promise.all([
-            import('../../../lib/mongodb'),
-            import('../auth/[...nextauth]/route')
-        ]);
+        // Import MongoDB connection
+        const { connectToDatabase } = await import('../../../lib/mongodb');
 
         // Get user session
         const session = await getServerSession(authOptions);
