@@ -1,6 +1,7 @@
 import { fetchUrls } from './server';
 import DashboardClient from './DashboardClient';
 import { headers } from 'next/headers';
+import { getDomainName } from '../../lib/utils';
 
 export default async function DashboardPage() {
     let initialUrls = [];
@@ -14,7 +15,8 @@ export default async function DashboardPage() {
 
     // Get the current host from the headers
     const headersList = headers();
-    const host = headersList.get('host') || 'localhost:3000'; // Fallback for safety
+    const request = { headers: headersList };
+    const host = getDomainName(request);
     const protocol = process.env.NODE_ENV === 'production' ? 'https://' : 'http://';
 
     // Ensure all props are serializable

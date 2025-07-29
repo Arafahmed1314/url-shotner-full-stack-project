@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import ThemeToggle from '../components/ThemeToggle';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function DashboardClient({ initialUrls, error: initialError, host, protocol }) {
     // console.log('DashboardClient received props:', { initialUrls, initialError, host, protocol });
+    const { isDarkMode } = useTheme();
 
     const [urls, setUrls] = useState(initialUrls);
     const [error, setError] = useState(initialError);
@@ -71,9 +74,17 @@ export default function DashboardClient({ initialUrls, error: initialError, host
         });
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900">
+        <div className={`min-h-screen transition-all duration-500 ${
+            isDarkMode 
+                ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900' 
+                : 'bg-gradient-to-br from-gray-900 to-blue-900'
+        }`}>
             {/* Navigation Bar */}
-            <nav className="backdrop-blur-md bg-white/10 fixed w-full top-0 z-50">
+            <nav className={`backdrop-blur-md fixed w-full top-0 z-50 transition-all duration-300 ${
+                isDarkMode 
+                    ? 'bg-gray-900/20 border-b border-gray-700/20' 
+                    : 'bg-white/10'
+            }`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center space-x-2">
@@ -83,16 +94,25 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                         <div className="flex items-center space-x-8">
                             <Link
                                 href="/"
-                                className="text-gray-300 hover:text-teal-400 transition-colors duration-300 font-medium"
+                                className={`font-medium transition-colors duration-300 ${
+                                    isDarkMode 
+                                        ? 'text-gray-300 hover:text-blue-400' 
+                                        : 'text-gray-300 hover:text-teal-400'
+                                }`}
                             >
                                 Home
                             </Link>
                             <Link
                                 href="/dashboard"
-                                className="text-gray-300 hover:text-teal-400 transition-colors duration-300 font-medium"
+                                className={`font-medium transition-colors duration-300 ${
+                                    isDarkMode 
+                                        ? 'text-gray-300 hover:text-blue-400' 
+                                        : 'text-gray-300 hover:text-teal-400'
+                                }`}
                             >
                                 Dashboard
                             </Link>
+                            <ThemeToggle />
                         </div>
                     </div>
                 </div>
@@ -109,11 +129,15 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                     <div className="mb-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4">
                         <div className="flex space-x-4">
                             <div>
-                                <label className="text-gray-300 mr-2">Sort by:</label>
+                                <label className={`mr-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-300'}`}>Sort by:</label>
                                 <select
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value)}
-                                    className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-teal-400"
+                                    className={`px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 ${
+                                        isDarkMode
+                                            ? 'bg-gray-700/30 border-gray-600/30 text-white focus:ring-blue-400'
+                                            : 'bg-white/5 border-white/10 text-white focus:ring-teal-400'
+                                    }`}
                                 >
                                     <option value="clicks">Clicks</option>
                                     <option value="shortCode">Short Code</option>
@@ -121,11 +145,15 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                                 </select>
                             </div>
                             <div>
-                                <label className="text-gray-300 mr-2">Order:</label>
+                                <label className={`mr-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-300'}`}>Order:</label>
                                 <select
                                     value={sortOrder}
                                     onChange={(e) => setSortOrder(e.target.value)}
-                                    className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-teal-400"
+                                    className={`px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 ${
+                                        isDarkMode
+                                            ? 'bg-gray-700/30 border-gray-600/30 text-white focus:ring-blue-400'
+                                            : 'bg-white/5 border-white/10 text-white focus:ring-teal-400'
+                                    }`}
                                 >
                                     <option value="desc">Descending</option>
                                     <option value="asc">Ascending</option>
@@ -134,11 +162,15 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                         </div>
                         <div className="flex space-x-4">
                             <div>
-                                <label className="text-gray-300 mr-2">Filter:</label>
+                                <label className={`mr-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-300'}`}>Filter:</label>
                                 <select
                                     value={filter}
                                     onChange={(e) => setFilter(e.target.value)}
-                                    className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-teal-400"
+                                    className={`px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 ${
+                                        isDarkMode
+                                            ? 'bg-gray-700/30 border-gray-600/30 text-white focus:ring-blue-400'
+                                            : 'bg-white/5 border-white/10 text-white focus:ring-teal-400'
+                                    }`}
                                 >
                                     <option value="all">All</option>
                                     <option value="passwordProtected">Password Protected</option>
@@ -147,7 +179,11 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                             </div>
                             <button
                                 onClick={fetchData}
-                                className="px-4 py-2 cursor-pointer bg-teal-500 rounded-lg text-white hover:bg-teal-600 transition-colors"
+                                className={`px-4 py-2 cursor-pointer rounded-lg text-white transition-colors duration-200 ${
+                                    isDarkMode
+                                        ? 'bg-blue-600 hover:bg-blue-700'
+                                        : 'bg-teal-500 hover:bg-teal-600'
+                                }`}
                             >
                                 Refresh
                             </button>
@@ -155,11 +191,17 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                     </div>
 
                     {error ? (
-                        <div className="p-6 bg-red-500/20 rounded-2xl border border-red-500/30 text-red-200 text-center text-lg">
+                        <div className={`p-6 rounded-2xl border text-center text-lg ${
+                            isDarkMode 
+                                ? 'bg-red-900/30 border-red-600/30 text-red-300'
+                                : 'bg-red-500/20 border-red-500/30 text-red-200'
+                        }`}>
                             {error}
                             <Link
                                 href="/"
-                                className="block mt-4 text-teal-400 hover:underline"
+                                className={`block mt-4 hover:underline ${
+                                    isDarkMode ? 'text-blue-400' : 'text-teal-400'
+                                }`}
                             >
                                 Back to Home
                             </Link>
@@ -167,28 +209,38 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                     ) : (
                         <div className="space-y-6">
                             {sortedAndFilteredUrls.length === 0 ? (
-                                <p className="text-gray-300 text-center text-lg">No URLs found.</p>
+                                <p className={`text-center text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-300'}`}>
+                                    No URLs found.
+                                </p>
                             ) : (
                                 sortedAndFilteredUrls.map((url) => (
                                     <div
                                         key={url.shortCode}
-                                        className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-lg hover:bg-white/20 hover:shadow-xl transition-all duration-300"
+                                        className={`backdrop-blur-md border rounded-2xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl ${
+                                            isDarkMode
+                                                ? 'bg-gray-800/30 border-gray-600/30 hover:bg-gray-700/40'
+                                                : 'bg-white/10 border-white/20 hover:bg-white/20'
+                                        }`}
                                     >
                                         <div className="space-y-3">
                                             {/* Short URL with Copy Button */}
                                             <p className="text-white text-lg">
-                                                <span className="font-semibold text-gray-300">Short URL:</span>{' '}
+                                                <span className={`font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-300'}`}>Short URL:</span>{' '}
                                                 <a
                                                     href={`${protocol}${host}/${url.shortCode}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="text-teal-400 hover:underline"
+                                                    className={`hover:underline ${
+                                                        isDarkMode ? 'text-blue-400' : 'text-teal-400'
+                                                    }`}
                                                 >
                                                     {`${protocol}${host}/${url.shortCode}`}
                                                 </a>
                                                 <button
                                                     onClick={() => copyToClipboard(`${protocol}${host}/${url.shortCode}`)}
-                                                    className="ml-2 text-teal-400 cursor-pointer hover:text-teal-300"
+                                                    className={`ml-2 cursor-pointer transition-colors duration-200 ${
+                                                        isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-teal-400 hover:text-teal-300'
+                                                    }`}
                                                     title="Copy to clipboard"
                                                 >
                                                     📋
@@ -197,12 +249,14 @@ export default function DashboardClient({ initialUrls, error: initialError, host
 
                                             {/* Original URL */}
                                             <p className="text-white text-lg">
-                                                <span className="font-semibold text-gray-300">Original URL:</span>{' '}
+                                                <span className={`font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-300'}`}>Original URL:</span>{' '}
                                                 <a
                                                     href={url.originalUrl}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="text-teal-400 hover:underline break-all"
+                                                    className={`hover:underline break-all ${
+                                                        isDarkMode ? 'text-blue-400' : 'text-teal-400'
+                                                    }`}
                                                 >
                                                     {url.originalUrl}
                                                 </a>
@@ -210,14 +264,16 @@ export default function DashboardClient({ initialUrls, error: initialError, host
 
                                             {/* Clicks */}
                                             <p className="text-white text-lg">
-                                                <span className="font-semibold text-gray-300">Clicks:</span>{' '}
-                                                <span className="text-teal-400 font-bold text-xl">{url.clicks || 0}</span>
+                                                <span className={`font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-300'}`}>Clicks:</span>{' '}
+                                                <span className={`font-bold text-xl ${
+                                                    isDarkMode ? 'text-blue-400' : 'text-teal-400'
+                                                }`}>{url.clicks || 0}</span>
                                             </p>
 
                                             {/* Expiration Date */}
                                             <p className="text-white text-lg">
-                                                <span className="font-semibold text-gray-300">Expires On:</span>{' '}
-                                                <span className="text-gray-400">
+                                                <span className={`font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-300'}`}>Expires On:</span>{' '}
+                                                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-400'}>
                                                     {url.expirationDate
                                                         ? new Date(url.expirationDate).toLocaleDateString()
                                                         : 'Never'}
@@ -226,10 +282,12 @@ export default function DashboardClient({ initialUrls, error: initialError, host
 
                                             {/* Password Protected */}
                                             <p className="text-white text-lg">
-                                                <span className="font-semibold text-gray-300">Password Protected:</span>{' '}
+                                                <span className={`font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-300'}`}>Password Protected:</span>{' '}
                                                 <span
                                                     className={
-                                                        url.password ? 'text-yellow-400 font-medium' : 'text-gray-400'
+                                                        url.password 
+                                                            ? isDarkMode ? 'text-yellow-300 font-medium' : 'text-yellow-400 font-medium'
+                                                            : isDarkMode ? 'text-gray-400' : 'text-gray-400'
                                                     }
                                                 >
                                                     {url.password ? 'Yes' : 'No'}

@@ -1,4 +1,5 @@
 import { connectToDatabase } from '../../../lib/mongodb';
+import { getBaseUrl } from '../../../lib/utils';
 import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
 
@@ -33,9 +34,8 @@ export async function POST(request) {
 
         if (existingUrl) {
             // If the URL already exists, return the existing short URL
-            const protocol = process.env.NODE_ENV === 'production' ? 'https://' : 'http://';
-            const host = request.headers.get('host');
-            const shortUrl = `${protocol}${host}/${existingUrl.shortCode}`;
+            const baseUrl = getBaseUrl(request);
+            const shortUrl = `${baseUrl}/${existingUrl.shortCode}`;
             return NextResponse.json({ shortUrl, message: 'URL already shortened' });
         }
 
@@ -91,9 +91,8 @@ export async function POST(request) {
         });
 
         // Return the short URL with the correct protocol
-        const protocol = process.env.NODE_ENV === 'production' ? 'https://' : 'http://';
-        const host = request.headers.get('host');
-        const shortUrl = `${protocol}${host}/${shortCode}`;
+        const baseUrl = getBaseUrl(request);
+        const shortUrl = `${baseUrl}/${shortCode}`;
         return NextResponse.json({ shortUrl });
     } catch (error) {
         return NextResponse.json({ message: 'Server error', error }, { status: 500 });

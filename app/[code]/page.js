@@ -61,12 +61,12 @@ export default async function PasswordPage({ params }) {
     // If there's an error or a password is required, render the password entry page
     console.log('Rendering password entry page with error:', error);
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
-            <div className="backdrop-blur-lg bg-white/10 p-8 rounded-2xl shadow-2xl w-full max-w-md">
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900 flex items-center justify-center">
+            <div className="backdrop-blur-lg bg-gray-800/30 border border-gray-600/30 p-8 rounded-2xl shadow-2xl w-full max-w-md">
                 {error ? (
                     <>
                         <h1 className="text-2xl font-bold text-white text-center mb-6">Error</h1>
-                        <p className="text-pink-200 text-center">{error}</p>
+                        <p className="text-red-300 text-center">{error}</p>
                     </>
                 ) : (
                     <>
