@@ -1,4 +1,4 @@
-'use cliexport default function DashboardClient({ initialUrls, initialError, host, protocol }) {t';
+'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -6,7 +6,7 @@ import ThemeToggle from '../components/ThemeToggle';
 import LoginButton from '../components/LoginButton';
 import { useTheme } from '../contexts/ThemeContext';
 
-export default function DashboardClient({ initialUrls, error: initialError, host, protocol }) {
+export default function DashboardClient({ initialUrls, initialError, host, protocol }) {
     // console.log('DashboardClient received props:', { initialUrls, initialError, host, protocol });
     const { isDarkMode } = useTheme();
 
