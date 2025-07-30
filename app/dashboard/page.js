@@ -4,14 +4,22 @@ import { headers } from 'next/headers';
 import { getDomainName } from '../../lib/utils';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation';
 
 export default async function DashboardPage() {
+    // Check if user is authenticated
+    const session = await getServerSession(authOptions);
+    
+    // If not authenticated, redirect to sign in page
+    if (!session) {
+        redirect('/auth/signin');
+    }
+
     let initialUrls = [];
     let error = null;
 
     try {
-        // Get user session to determine if admin or regular user
-        const session = await getServerSession(authOptions);
+        // Get user email for data filtering
         const userEmail = session?.user?.email || null;
         
         initialUrls = await fetchUrls(userEmail);

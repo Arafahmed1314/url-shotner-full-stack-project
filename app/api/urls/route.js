@@ -25,6 +25,15 @@ export async function GET() {
         ]);
 
         const session = await getServerSession(authOptions);
+        
+        // Check if user is authenticated
+        if (!session) {
+            return new Response(JSON.stringify({ message: 'Unauthorized' }), {
+                status: 401,
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }
+
         const { db } = await connectToDatabase();
 
         // Admin can see all URLs, regular users see only their URLs
