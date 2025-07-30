@@ -34,10 +34,6 @@ export default async function PasswordPage({ params }) {
 
     // Process the result after the try/catch
     if (urlDoc) {
-        console.log('urlDoc:', urlDoc);
-        console.log('urlDoc.password:', urlDoc.password);
-        console.log('urlDoc.password === null:', urlDoc.password === null);
-
         if (!urlDoc) {
             error = 'URL not found';
         } else {
@@ -49,7 +45,6 @@ export default async function PasswordPage({ params }) {
 
                 // Validate the URL before redirecting
                 if (!urlDoc.originalUrl || !urlDoc.originalUrl.match(/^(http|https):\/\/[^\s$.?#].[^\s]*$/)) {
-                    console.log('Invalid original URL:', urlDoc.originalUrl);
                     error = 'Invalid original URL';
                 } else {
                     redirect(urlDoc.originalUrl); // This will throw NEXT_REDIRECT
@@ -59,7 +54,6 @@ export default async function PasswordPage({ params }) {
     }
 
     // If there's an error or a password is required, render the password entry page
-    console.log('Rendering password entry page with error:', error);
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900 flex items-center justify-center">
             <div className="backdrop-blur-lg bg-gray-800/30 border border-gray-600/30 p-8 rounded-2xl shadow-2xl w-full max-w-md">

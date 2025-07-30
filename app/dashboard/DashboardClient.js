@@ -1,4 +1,4 @@
-'use client';
+'use cliexport default function DashboardClient({ initialUrls, initialError, host, protocol }) {t';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -22,7 +22,6 @@ export default function DashboardClient({ initialUrls, error: initialError, host
             const res = await fetch('/api/urls');
             if (res.ok) {
                 const data = await res.json();
-                console.log('Fetched URLs via polling or refresh:', data);
                 setUrls(data);
                 setError(null);
             } else {
@@ -287,6 +286,29 @@ export default function DashboardClient({ initialUrls, error: initialError, host
                         </div>
                     )}
                 </div>
+
+                {/* Contact Footer */}
+                <footer className="mt-16 text-center">
+                    <div className={`p-6 rounded-xl backdrop-blur-sm border transition-all duration-300 ${isDarkMode
+                        ? 'bg-gray-800/30 border-gray-700/50'
+                        : 'bg-white/10 border-white/20'
+                        }`}>
+                        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                            Built with ❤️ by{' '}
+                            <a
+                                href="https://naimul.me"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`font-medium transition-colors duration-200 ${isDarkMode
+                                    ? 'text-blue-400 hover:text-blue-300'
+                                    : 'text-pink-600 hover:text-pink-500'
+                                    }`}
+                            >
+                                naimul.me
+                            </a>
+                        </p>
+                    </div>
+                </footer>
             </main>
         </div>
     );

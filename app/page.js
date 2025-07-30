@@ -92,7 +92,7 @@ export default function Page() {
                 }`}>
                 Dashboard
               </Link>
-              <a href="#" className={`font-medium transition-colors duration-200 ${isDarkMode
+              <a href="#contact" className={`font-medium transition-colors duration-200 ${isDarkMode
                   ? 'text-gray-300 hover:text-blue-400'
                   : 'text-white hover:text-pink-200'
                 }`}>
@@ -274,6 +274,37 @@ export default function Page() {
 
           {/* Features */}
           <Features />
+
+          {/* Contact Section */}
+          <section id="contact" className="mt-16 text-center">
+            <div className={`p-8 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${isDarkMode
+                ? 'bg-gray-800/30 border-gray-700/50'
+                : 'bg-white/10 border-white/20'
+              }`}>
+              <h2 className={`text-2xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-white'}`}>
+                Get in Touch
+              </h2>
+              <p className={`mb-6 ${isDarkMode ? 'text-gray-300' : 'text-pink-100'}`}>
+                Have questions or suggestions? Feel free to reach out!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a
+                  href="https://naimul.me"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${isDarkMode
+                      ? 'bg-blue-600 hover:bg-blue-500 text-white'
+                      : 'bg-pink-500 hover:bg-pink-400 text-white'
+                    } hover:scale-105 transform`}
+                >
+                  🌐 Visit naimul.me
+                </a>
+                <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-pink-200'}`}>
+                  Developer & Creator
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
     </div>

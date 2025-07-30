@@ -21,7 +21,6 @@ export default async function DashboardPage() {
 
     // Ensure all props are serializable
     error = error ? String(error) : null;
-    // console.log('Props passed to DashboardClient:', { initialUrls, error, host, protocol });
 
     return (
         <DashboardClient initialUrls={initialUrls} error={error} host={host} protocol={protocol} />

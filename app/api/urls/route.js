@@ -41,8 +41,6 @@ export async function GET() {
             }
         }).toArray();
 
-        console.log('Raw URLs from MongoDB (API):', urls);
-
         // Serialize MongoDB documents to plain objects
         const serializedUrls = urls.map((url) => {
             const plainUrl = { ...url };
@@ -59,7 +57,6 @@ export async function GET() {
             };
         });
 
-        console.log('Serialized URLs (API):', serializedUrls);
         return new Response(JSON.stringify(serializedUrls), {
             status: 200,
             headers: { 'Content-Type': 'application/json' },

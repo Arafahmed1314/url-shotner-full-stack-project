@@ -4,7 +4,6 @@ export async function fetchUrls() {
     try {
         const { db } = await connectToDatabase();
         const urls = await db.collection('urls').find({}, { projection: { shortCode: 1, originalUrl: 1, clicks: 1, expirationDate: 1, password: 1, _id: 0 } }).toArray();
-        console.log('Raw URLs from MongoDB:', urls);
         // Serialize MongoDB documents to plain objects
         const serializedUrls = urls.map((url) => {
             const plainUrl = { ...url }; // Create a shallow copy
@@ -18,7 +17,6 @@ export async function fetchUrls() {
                 password: Boolean(plainUrl.password),
             };
         });
-        console.log('Serialized URLs:', serializedUrls);
         return serializedUrls;
     } catch (err) {
         console.error('Error fetching URLs:', err);
