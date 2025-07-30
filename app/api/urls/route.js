@@ -1,5 +1,7 @@
 import { getServerSession } from 'next-auth';
 
+const ADMIN_EMAIL = 'nayemhasan1314@gmail.com';
+
 export async function GET() {
     try {
         // Check if MongoDB is properly configured
@@ -25,8 +27,11 @@ export async function GET() {
         const session = await getServerSession(authOptions);
         const { db } = await connectToDatabase();
 
-        // If user is logged in, show only their URLs, otherwise show all URLs
-        const query = session?.user?.email ? { userId: session.user.email } : {};
+        // Admin can see all URLs, regular users see only their URLs
+        let query = {};
+        if (session?.user?.email && session.user.email !== ADMIN_EMAIL) {
+            query = { userId: session.user.email };
+        }
 
         const urls = await db.collection('urls').find(query, {
             projection: {

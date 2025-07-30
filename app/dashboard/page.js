@@ -2,13 +2,19 @@ import { fetchUrls } from './server';
 import DashboardClient from './DashboardClient';
 import { headers } from 'next/headers';
 import { getDomainName } from '../../lib/utils';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]/route';
 
 export default async function DashboardPage() {
     let initialUrls = [];
     let error = null;
 
     try {
-        initialUrls = await fetchUrls();
+        // Get user session to determine if admin or regular user
+        const session = await getServerSession(authOptions);
+        const userEmail = session?.user?.email || null;
+        
+        initialUrls = await fetchUrls(userEmail);
     } catch (err) {
         error = 'Failed to load analytics';
     }

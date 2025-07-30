@@ -1,14 +1,20 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import ThemeToggle from '../components/ThemeToggle';
 import LoginButton from '../components/LoginButton';
 import { useTheme } from '../contexts/ThemeContext';
 
+const ADMIN_EMAIL = 'nayemhasan1314@gmail.com';
+
 export default function DashboardClient({ initialUrls, initialError, host, protocol }) {
-    // console.log('DashboardClient received props:', { initialUrls, initialError, host, protocol });
     const { isDarkMode } = useTheme();
+    const { data: session } = useSession();
+
+    // Check if current user is admin
+    const isAdmin = session?.user?.email === ADMIN_EMAIL;
 
     const [urls, setUrls] = useState(initialUrls);
     const [error, setError] = useState(initialError);
@@ -119,7 +125,16 @@ export default function DashboardClient({ initialUrls, initialError, host, proto
             <main className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-5xl mx-auto">
                     <h1 className="text-4xl sm:text-5xl font-extrabold text-white text-center mb-12 tracking-tight">
-                        Analytics Dashboard
+                        {isAdmin ? (
+                            <>
+                                <span className="text-yellow-400">👑</span> Admin Dashboard <span className="text-yellow-400">👑</span>
+                                <div className="text-sm font-normal text-yellow-300 mt-2">
+                                    Viewing all users&apos; URLs
+                                </div>
+                            </>
+                        ) : (
+                            'Analytics Dashboard'
+                        )}
                     </h1>
 
                     {/* Sorting, Filtering, and Refresh Controls */}
@@ -248,6 +263,21 @@ export default function DashboardClient({ initialUrls, initialError, host, proto
                                                     {url.originalUrl}
                                                 </a>
                                             </p>
+
+                                            {/* User Information (Admin Only) */}
+                                            {isAdmin && (
+                                                <p className="text-white text-lg">
+                                                    <span className={`font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-300'}`}>Created by:</span>{' '}
+                                                    <span className={`${isDarkMode ? 'text-yellow-400' : 'text-yellow-600'}`}>
+                                                        {url.userName || url.userId || 'Anonymous'}
+                                                    </span>
+                                                    {url.userId && (
+                                                        <span className={`ml-2 text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                                                            ({url.userId})
+                                                        </span>
+                                                    )}
+                                                </p>
+                                            )}
 
                                             {/* Clicks */}
                                             <p className="text-white text-lg">

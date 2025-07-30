@@ -1,6 +1,7 @@
 import { connectToDatabase } from '../../lib/mongodb';
 import PasswordForm from './PasswordForm';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 // Server Component: Fetch data on the server and handle redirection
 export default async function PasswordPage({ params }) {
@@ -33,24 +34,22 @@ export default async function PasswordPage({ params }) {
     }
 
     // Process the result after the try/catch
-    if (urlDoc) {
-        if (!urlDoc) {
-            error = 'URL not found';
-        } else {
-            originalUrl = urlDoc.originalUrl;
+    if (!urlDoc) {
+        // URL not found - show error page
+        error = 'URL not found or has expired';
+    } else {
+        originalUrl = urlDoc.originalUrl;
 
-            // If no password, redirect directly to the original URL
-            if (urlDoc.password === null || urlDoc.password === undefined) {
-                console.log('No password set, redirecting to:', urlDoc.originalUrl);
-
-                // Validate the URL before redirecting
-                if (!urlDoc.originalUrl || !urlDoc.originalUrl.match(/^(http|https):\/\/[^\s$.?#].[^\s]*$/)) {
-                    error = 'Invalid original URL';
-                } else {
-                    redirect(urlDoc.originalUrl); // This will throw NEXT_REDIRECT
-                }
+        // If no password, redirect directly to the original URL
+        if (urlDoc.password === null || urlDoc.password === undefined) {
+            // Validate the URL before redirecting
+            if (!urlDoc.originalUrl || !urlDoc.originalUrl.match(/^(http|https):\/\/[^\s$.?#].[^\s]*$/)) {
+                error = 'Invalid original URL';
+            } else {
+                redirect(urlDoc.originalUrl); // This will throw NEXT_REDIRECT
             }
         }
+        // If password exists, continue to show password form
     }
 
     // If there's an error or a password is required, render the password entry page
@@ -59,8 +58,20 @@ export default async function PasswordPage({ params }) {
             <div className="backdrop-blur-lg bg-gray-800/30 border border-gray-600/30 p-8 rounded-2xl shadow-2xl w-full max-w-md">
                 {error ? (
                     <>
-                        <h1 className="text-2xl font-bold text-white text-center mb-6">Error</h1>
-                        <p className="text-red-300 text-center">{error}</p>
+                        <div className="text-center mb-6">
+                            <div className="text-6xl mb-4">🔍</div>
+                            <h1 className="text-2xl font-bold text-white mb-2">Oops!</h1>
+                            <p className="text-red-300 mb-6">{error}</p>
+                            <p className="text-gray-400 text-sm mb-6">
+                                The short URL you&apos;re looking for doesn&apos;t exist or may have expired.
+                            </p>
+                            <Link 
+                                href="/" 
+                                className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl transition-colors duration-200"
+                            >
+                                ← Go Back Home
+                            </Link>
+                        </div>
                     </>
                 ) : (
                     <>
