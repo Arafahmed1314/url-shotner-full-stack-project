@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Features from './components/Features';
 import ThemeToggle from './components/ThemeToggle';
@@ -10,6 +11,9 @@ import { useTheme } from './contexts/ThemeContext';
 
 export default function Page() {
   const { isDarkMode } = useTheme();
+  const { data: session, status } = useSession();
+  const isAuthenticated = !!session;
+  
   const [url, setUrl] = useState('');
   const [customCode, setCustomCode] = useState('');
   const [password, setPassword] = useState('');
@@ -89,12 +93,14 @@ export default function Page() {
                 }`}>
                 Home
               </a>
-              <Link href="/dashboard" className={`font-medium transition-colors duration-200 ${isDarkMode
-                  ? 'text-gray-300 hover:text-blue-400'
-                  : 'text-white hover:text-pink-200'
-                }`}>
-                Dashboard
-              </Link>
+              {isAuthenticated && (
+                <Link href="/dashboard" className={`font-medium transition-colors duration-200 ${isDarkMode
+                    ? 'text-gray-300 hover:text-blue-400'
+                    : 'text-white hover:text-pink-200'
+                  }`}>
+                  Dashboard
+                </Link>
+              )}
               <a href="#contact" className={`font-medium transition-colors duration-200 ${isDarkMode
                   ? 'text-gray-300 hover:text-blue-400'
                   : 'text-white hover:text-pink-200'
@@ -144,16 +150,18 @@ export default function Page() {
                 >
                   Home
                 </a>
-                <Link 
-                  href="/dashboard"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${isDarkMode
-                      ? 'text-gray-300 hover:text-white hover:bg-gray-700/50'
-                      : 'text-gray-700 hover:text-gray-900 hover:bg-white/50'
-                    }`}
-                >
-                  Dashboard
-                </Link>
+                {isAuthenticated && (
+                  <Link 
+                    href="/dashboard"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${isDarkMode
+                        ? 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+                        : 'text-gray-700 hover:text-gray-900 hover:bg-white/50'
+                      }`}
+                  >
+                    Dashboard
+                  </Link>
+                )}
                 <a 
                   href="#contact"
                   onClick={() => setIsMobileMenuOpen(false)}
