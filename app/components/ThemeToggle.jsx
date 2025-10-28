@@ -8,7 +8,11 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-200 text-white/80 hover:text-white"
+      className={`p-2 rounded-lg backdrop-blur-sm border transition-all duration-200 ${
+        isDarkMode
+          ? "bg-white/10 border-white/20 hover:bg-white/20 text-white/80 hover:text-white"
+          : "bg-white/70 border-slate-300 hover:bg-white text-slate-700 hover:text-slate-900"
+      }`}
       title={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
     >
       {isDarkMode ? (

@@ -20,8 +20,8 @@ export default function SignIn() {
     if (isLoading) {
         return (
             <div className={`min-h-screen flex items-center justify-center ${isDarkMode
-                    ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900'
-                    : 'bg-gradient-to-br from-gray-900 to-blue-900'
+                ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900'
+                : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'
                 }`}>
                 <div className="text-white text-xl">Loading...</div>
             </div>
@@ -30,23 +30,23 @@ export default function SignIn() {
 
     return (
         <div className={`min-h-screen transition-all duration-500 ${isDarkMode
-                ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900'
-                : 'bg-gradient-to-br from-gray-900 to-blue-900'
+            ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900'
+            : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'
             }`}>
             <div className="min-h-screen flex items-center justify-center px-4">
-                <div className={`max-w-md w-full space-y-8 p-8 rounded-2xl backdrop-blur-md border ${isDarkMode
-                        ? 'bg-gray-800/30 border-gray-600/30'
-                        : 'bg-white/10 border-white/20'
+                <div className={`max-w-md w-full space-y-8 p-8 rounded-2xl backdrop-blur-md border shadow-xl ${isDarkMode
+                    ? 'bg-gray-800/30 border-gray-600/30'
+                    : 'bg-white/90 border-slate-200'
                     }`}>
                     <div className="text-center">
                         <div className="flex items-center justify-center space-x-2 mb-4">
-                            <span className="text-white text-3xl">🔗</span>
-                            <span className="text-white font-bold text-2xl">URLify</span>
+                            <span className={`text-3xl ${isDarkMode ? 'text-white' : 'text-blue-600'}`}>🔗</span>
+                            <span className={`font-bold text-2xl ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>URLify</span>
                         </div>
-                        <h2 className="text-3xl font-extrabold text-white">
+                        <h2 className={`text-3xl font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
                             Welcome back
                         </h2>
-                        <p className={`mt-2 text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-300'
+                        <p className={`mt-2 text-sm ${isDarkMode ? 'text-gray-300' : 'text-slate-600'
                             }`}>
                             Sign in to your account to access your dashboard
                         </p>
@@ -55,9 +55,9 @@ export default function SignIn() {
                     <div className="space-y-4">
                         <button
                             onClick={() => login('google')}
-                            className={`w-full flex justify-center items-center space-x-3 py-3 px-4 rounded-lg font-medium transition-all duration-200 hover:scale-105 ${isDarkMode
-                                    ? 'bg-white text-gray-900 hover:bg-gray-100'
-                                    : 'bg-white text-gray-900 hover:bg-gray-50 border border-gray-300'
+                            className={`w-full flex justify-center items-center space-x-3 py-3 px-4 rounded-lg font-medium transition-all duration-200 hover:scale-105 shadow-md ${isDarkMode
+                                ? 'bg-white text-gray-900 hover:bg-gray-100'
+                                : 'bg-white text-gray-900 hover:bg-gray-50 border border-slate-300'
                                 }`}
                         >
                             <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -84,7 +84,7 @@ export default function SignIn() {
                         <div className="text-center">
                             <Link
                                 href="/"
-                                className={`text-sm hover:underline ${isDarkMode ? 'text-blue-400' : 'text-teal-400'
+                                className={`text-sm hover:underline ${isDarkMode ? 'text-blue-400' : 'text-blue-600'
                                     }`}
                             >
                                 Back to Home

@@ -31,14 +31,18 @@ export default function Features() {
           className={`backdrop-blur-lg p-6 rounded-xl border transform transition-all duration-200 hover:scale-105 ${
             isDarkMode
               ? "bg-gray-800/30 border-gray-600/30"
-              : "bg-white/10 border-white/10"
+              : "bg-white/90 border-slate-200 shadow-lg"
           }`}
         >
           <div className="text-3xl mb-3">{feature.icon}</div>
-          <h3 className="text-white text-xl font-semibold mb-2">
+          <h3
+            className={`text-xl font-semibold mb-2 ${
+              isDarkMode ? "text-white" : "text-slate-800"
+            }`}
+          >
             {feature.title}
           </h3>
-          <p className={isDarkMode ? "text-gray-300" : "text-white/70"}>
+          <p className={isDarkMode ? "text-gray-300" : "text-slate-600"}>
             {feature.description}
           </p>
         </div>

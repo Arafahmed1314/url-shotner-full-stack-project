@@ -44,25 +44,25 @@ export default function PasswordForm({ code, originalUrl, initialError }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password..."
-            className="w-full px-6 py-4 rounded-xl bg-gray-700/30 border border-gray-600/30 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200"
+            className="w-full px-6 py-4 rounded-xl bg-white border border-slate-300 text-slate-800 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
             required
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200 transition-colors duration-200"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors duration-200"
           >
             {showPassword ? "👁️‍🗨️" : "👁️"}
           </button>
         </div>
         <button
           type="submit"
-          className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl font-medium text-white hover:from-blue-500 hover:to-indigo-600 transform transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl font-medium text-white hover:from-blue-700 hover:to-indigo-800 transform transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg"
         >
           Submit
         </button>
       </form>
-      {error && <p className="mt-4 text-red-300 text-center">{error}</p>}
+      {error && <p className="mt-4 text-red-600 text-center">{error}</p>}
     </>
   );
 }

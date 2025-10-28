@@ -11,7 +11,9 @@ export default function LoginButton() {
     return (
       <div
         className={`px-4 py-2 rounded-lg ${
-          isDarkMode ? "bg-gray-700 text-gray-300" : "bg-gray-200 text-gray-600"
+          isDarkMode
+            ? "bg-gray-700 text-gray-300"
+            : "bg-slate-100 text-slate-600"
         }`}
       >
         Loading...
@@ -31,7 +33,7 @@ export default function LoginButton() {
         )}
         <span
           className={`text-sm ${
-            isDarkMode ? "text-gray-300" : "text-gray-300"
+            isDarkMode ? "text-gray-300" : "text-slate-700"
           }`}
         >
           {user?.name}
@@ -56,7 +58,7 @@ export default function LoginButton() {
       className={`px-6 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2 ${
         isDarkMode
           ? "bg-blue-600 hover:bg-blue-700 text-white"
-          : "bg-white hover:bg-gray-50 text-gray-900 border border-gray-300"
+          : "bg-blue-600 hover:bg-blue-700 text-white shadow-md"
       }`}
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24">

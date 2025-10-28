@@ -54,20 +54,20 @@ export default async function PasswordPage({ params }) {
 
     // If there's an error or a password is required, render the password entry page
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900 flex items-center justify-center">
-            <div className="backdrop-blur-lg bg-gray-800/30 border border-gray-600/30 p-8 rounded-2xl shadow-2xl w-full max-w-md">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
+            <div className="backdrop-blur-lg bg-white/90 border border-slate-200 p-8 rounded-2xl shadow-2xl w-full max-w-md">
                 {error ? (
                     <>
                         <div className="text-center mb-6">
                             <div className="text-6xl mb-4">🔍</div>
-                            <h1 className="text-2xl font-bold text-white mb-2">Oops!</h1>
-                            <p className="text-red-300 mb-6">{error}</p>
-                            <p className="text-gray-400 text-sm mb-6">
+                            <h1 className="text-2xl font-bold text-slate-800 mb-2">Oops!</h1>
+                            <p className="text-red-600 mb-6">{error}</p>
+                            <p className="text-slate-600 text-sm mb-6">
                                 The short URL you&apos;re looking for doesn&apos;t exist or may have expired.
                             </p>
-                            <Link 
-                                href="/" 
-                                className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl transition-colors duration-200"
+                            <Link
+                                href="/"
+                                className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors duration-200 shadow-md"
                             >
                                 ← Go Back Home
                             </Link>
@@ -75,7 +75,7 @@ export default async function PasswordPage({ params }) {
                     </>
                 ) : (
                     <>
-                        <h1 className="text-2xl font-bold text-white text-center mb-6">Enter Password</h1>
+                        <h1 className="text-2xl font-bold text-slate-800 text-center mb-6">Enter Password</h1>
                         <PasswordForm code={code} originalUrl={originalUrl} initialError={error} />
                     </>
                 )}

@@ -13,7 +13,7 @@ export default function Page() {
   const { isDarkMode } = useTheme();
   const { data: session, status } = useSession();
   const isAuthenticated = !!session;
-  
+
   const [url, setUrl] = useState('');
   const [customCode, setCustomCode] = useState('');
   const [password, setPassword] = useState('');
@@ -70,55 +70,55 @@ export default function Page() {
 
   return (
     <div className={`min-h-screen transition-all duration-500 ${isDarkMode
-        ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900'
-        : 'bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500'
+      ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900'
+      : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'
       }`}>
       {/* Navigation Bar */}
       <nav className={`backdrop-blur-md fixed w-full top-0 z-50 transition-all duration-300 ${isDarkMode
-          ? 'bg-gray-900/20 border-b border-gray-700/20'
-          : 'bg-white/10'
+        ? 'bg-gray-900/20 border-b border-gray-700/20'
+        : 'bg-white/80 border-b border-slate-200 shadow-sm'
         }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-2">
-              <span className="text-white">🔗</span>
-              <span className="text-white font-bold text-xl">URLify</span>
+              <span className={isDarkMode ? "text-white" : "text-blue-600"}>🔗</span>
+              <span className={`font-bold text-xl ${isDarkMode ? "text-white" : "text-slate-800"}`}>URLify</span>
             </div>
-            
+
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <a href="#" className={`font-medium transition-colors duration-200 ${isDarkMode
-                  ? 'text-gray-300 hover:text-blue-400'
-                  : 'text-white hover:text-pink-200'
+                ? 'text-gray-300 hover:text-blue-400'
+                : 'text-slate-600 hover:text-blue-600'
                 }`}>
                 Home
               </a>
               {isAuthenticated && (
                 <Link href="/dashboard" className={`font-medium transition-colors duration-200 ${isDarkMode
-                    ? 'text-gray-300 hover:text-blue-400'
-                    : 'text-white hover:text-pink-200'
+                  ? 'text-gray-300 hover:text-blue-400'
+                  : 'text-slate-600 hover:text-blue-600'
                   }`}>
                   Dashboard
                 </Link>
               )}
               <a href="#contact" className={`font-medium transition-colors duration-200 ${isDarkMode
-                  ? 'text-gray-300 hover:text-blue-400'
-                  : 'text-white hover:text-pink-200'
+                ? 'text-gray-300 hover:text-blue-400'
+                : 'text-slate-600 hover:text-blue-600'
                 }`}>
                 Contact
               </a>
               <ThemeToggle />
               <LoginButton />
             </div>
-            
+
             {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center space-x-4">
               <ThemeToggle />
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={`p-2 rounded-md transition-colors duration-200 ${isDarkMode
-                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50'
-                    : 'text-white hover:text-pink-200 hover:bg-white/10'
+                  ? 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+                  : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
                   }`}
                 aria-label="Toggle mobile menu"
               >
@@ -132,42 +132,42 @@ export default function Page() {
               </button>
             </div>
           </div>
-          
+
           {/* Mobile Navigation Menu */}
           {isMobileMenuOpen && (
             <div className={`md:hidden transition-all duration-300 ${isDarkMode
-                ? 'bg-gray-900/95 border-t border-gray-700/50'
-                : 'bg-white/90 border-t border-white/20'
+              ? 'bg-gray-900/95 border-t border-gray-700/50'
+              : 'bg-white/95 border-t border-slate-200 shadow-lg'
               }`}>
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${isDarkMode
-                      ? 'text-gray-300 hover:text-white hover:bg-gray-700/50'
-                      : 'text-gray-700 hover:text-gray-900 hover:bg-white/50'
+                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+                    : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
                     }`}
                 >
                   Home
                 </a>
                 {isAuthenticated && (
-                  <Link 
+                  <Link
                     href="/dashboard"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${isDarkMode
-                        ? 'text-gray-300 hover:text-white hover:bg-gray-700/50'
-                        : 'text-gray-700 hover:text-gray-900 hover:bg-white/50'
+                      ? 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+                      : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
                       }`}
                   >
                     Dashboard
                   </Link>
                 )}
-                <a 
+                <a
                   href="#contact"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${isDarkMode
-                      ? 'text-gray-300 hover:text-white hover:bg-gray-700/50'
-                      : 'text-gray-700 hover:text-gray-900 hover:bg-white/50'
+                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+                    : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
                     }`}
                 >
                   Contact
@@ -184,19 +184,19 @@ export default function Page() {
       {/* Main Content */}
       <main className="pt-24 pb-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          <h1 className={`text-4xl md:text-6xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
             Shorten Your URLs
-            <span className="block text-pink-200">With Style & Security</span>
+            <span className={`block ${isDarkMode ? 'text-pink-200' : 'text-blue-600'}`}>With Style & Security</span>
           </h1>
-          <p className="text-white/80 text-lg mb-12">
+          <p className={`text-lg mb-12 ${isDarkMode ? 'text-white/80' : 'text-slate-600'}`}>
             Transform your long URLs into memorable, shareable links with optional password protection
           </p>
 
           {/* URL Input Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className={`backdrop-blur-lg p-8 rounded-2xl shadow-2xl transition-all duration-300 ${isDarkMode
-                ? 'bg-gray-800/30 border border-gray-600/30'
-                : 'bg-white/10'
+            <div className={`backdrop-blur-lg p-8 rounded-2xl shadow-2xl transition-all duration-300 border ${isDarkMode
+              ? 'bg-gray-800/30 border-gray-600/30'
+              : 'bg-white/90 border-slate-200 shadow-xl'
               }`}>
               <div className="flex flex-col space-y-4">
                 {/* URL Input */}
@@ -207,8 +207,8 @@ export default function Page() {
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="Paste your long URL here..."
                     className={`flex-1 px-6 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all duration-200 ${isDarkMode
-                        ? 'bg-gray-700/30 border-gray-600/30 text-white placeholder-gray-400 focus:ring-blue-400'
-                        : 'bg-white/5 border-white/10 text-white placeholder-white/50 focus:ring-pink-400'
+                      ? 'bg-gray-700/30 border-gray-600/30 text-white placeholder-gray-400 focus:ring-blue-400'
+                      : 'bg-white border-slate-300 text-slate-800 placeholder-slate-500 focus:ring-blue-500 focus:border-blue-500'
                       }`}
                     required
                   />
@@ -223,11 +223,11 @@ export default function Page() {
                       onChange={(e) => setCustomCode(e.target.value)}
                       placeholder="Custom short code (optional)"
                       className={`w-full px-6 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all duration-200 ${isDarkMode
-                          ? 'bg-gray-700/30 border-gray-600/30 text-white placeholder-gray-400 focus:ring-blue-400'
-                          : 'bg-white/5 border-white/10 text-white placeholder-white/50 focus:ring-pink-400'
+                        ? 'bg-gray-700/30 border-gray-600/30 text-white placeholder-gray-400 focus:ring-blue-400'
+                        : 'bg-white border-slate-300 text-slate-800 placeholder-slate-500 focus:ring-blue-500 focus:border-blue-500'
                         }`}
                     />
-                    <p className={`text-sm text-left ${isDarkMode ? 'text-gray-400' : 'text-white/70'}`}>
+                    <p className={`text-sm text-left ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>
                       Enter a custom code (e.g., "mycustomcode"). Leave blank for a random code.
                     </p>
                   </div>
@@ -242,11 +242,11 @@ export default function Page() {
                       onChange={(e) => setExpirationDate(e.target.value)}
                       min={today} // Prevent selecting past dates
                       className={`w-full px-6 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all duration-200 ${isDarkMode
-                          ? 'bg-gray-700/30 border-gray-600/30 text-white placeholder-gray-400 focus:ring-blue-400'
-                          : 'bg-white/5 border-white/10 text-white placeholder-white/50 focus:ring-pink-400'
+                        ? 'bg-gray-700/30 border-gray-600/30 text-white placeholder-gray-400 focus:ring-blue-400'
+                        : 'bg-white border-slate-300 text-slate-800 placeholder-slate-500 focus:ring-blue-500 focus:border-blue-500'
                         }`}
                     />
-                    <p className={`text-sm text-left ${isDarkMode ? 'text-gray-400' : 'text-white/70'}`}>
+                    <p className={`text-sm text-left ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>
                       Set an expiration date (optional). Leave blank for a default of 30 days.
                     </p>
                   </div>
@@ -258,13 +258,13 @@ export default function Page() {
                     <button
                       type="button"
                       onClick={togglePasswordProtection}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${isProtected
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 border ${isProtected
                         ? isDarkMode
-                          ? 'bg-blue-500/20 text-blue-300 border border-blue-400/30'
-                          : 'bg-pink-500/20 text-pink-200'
+                          ? 'bg-blue-500/20 text-blue-300 border-blue-400/30'
+                          : 'bg-blue-50 text-blue-700 border-blue-200'
                         : isDarkMode
-                          ? 'bg-gray-700/30 text-gray-300 hover:bg-gray-600/30 border border-gray-600/30'
-                          : 'bg-white/5 text-white/70 hover:bg-white/10'
+                          ? 'bg-gray-700/30 text-gray-300 hover:bg-gray-600/30 border-gray-600/30'
+                          : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border-slate-300'
                         }`}
                     >
                       {isProtected ? '🔒' : '🔓'}
@@ -282,15 +282,15 @@ export default function Page() {
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter password for protection..."
                       className={`w-full px-6 py-4 rounded-xl border focus:outline-none focus:ring-2 transition-all duration-200 ${isDarkMode
-                          ? 'bg-gray-700/30 border-gray-600/30 text-white placeholder-gray-400 focus:ring-blue-400'
-                          : 'bg-white/5 border-white/10 text-white placeholder-white/50 focus:ring-pink-400'
+                        ? 'bg-gray-700/30 border-gray-600/30 text-white placeholder-gray-400 focus:ring-blue-400'
+                        : 'bg-white border-slate-300 text-slate-800 placeholder-slate-500 focus:ring-blue-500 focus:border-blue-500'
                         }`}
                       required={isProtected}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className={`absolute right-4 top-1/2 transform -translate-y-1/2 transition-colors duration-200 ${isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-white/50 hover:text-white/80'
+                      className={`absolute right-4 top-1/2 transform -translate-y-1/2 transition-colors duration-200 ${isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-slate-500 hover:text-slate-700'
                         }`}
                     >
                       {showPassword ? '👁️‍🗨️' : '👁️'}
@@ -302,8 +302,8 @@ export default function Page() {
                 <button
                   type="submit"
                   className={`w-full md:w-auto px-8 py-4 rounded-xl font-medium text-white transform transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 flex items-center justify-center gap-2 cursor-pointer ${isDarkMode
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 focus:ring-blue-400'
-                      : 'bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 focus:ring-purple-400'
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 focus:ring-blue-400'
+                    : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:ring-blue-500 shadow-lg'
                     } ${isAnimating ? 'animate-pulse' : ''}`}
                 >
                   Shorten URL
@@ -314,21 +314,21 @@ export default function Page() {
               {/* Result Section */}
               {shortUrl && (
                 <div className={`mt-6 p-4 rounded-xl border flex items-center justify-between animate-fade-in ${isDarkMode
-                    ? 'bg-gray-700/30 border-gray-600/30'
-                    : 'bg-white/5 border-white/10'
+                  ? 'bg-gray-700/30 border-gray-600/30'
+                  : 'bg-green-50 border-green-200'
                   }`}>
-                  <div className="flex items-center gap-2 text-white">
+                  <div className={`flex items-center gap-2 ${isDarkMode ? 'text-white' : 'text-green-800'}`}>
                     <span>🌐</span>
                     <span>{shortUrl}</span>
-                    {isProtected && <span className={isDarkMode ? 'text-blue-400' : 'text-pink-400'}>🔒</span>}
+                    {isProtected && <span className={isDarkMode ? 'text-blue-400' : 'text-green-600'}>🔒</span>}
                   </div>
                   <button
                     type="button"
                     onClick={() => navigator.clipboard.writeText(shortUrl)}
-                    className={`p-2 rounded-lg transition-colors duration-200 ${isDarkMode ? 'hover:bg-gray-600/30' : 'hover:bg-white/10'
+                    className={`p-2 rounded-lg transition-colors duration-200 ${isDarkMode ? 'hover:bg-gray-600/30' : 'hover:bg-green-100'
                       }`}
                   >
-                    <span className="text-white cursor-pointer">📋</span>
+                    <span className={`cursor-pointer ${isDarkMode ? 'text-white' : 'text-green-700'}`}>📋</span>
                   </button>
                 </div>
               )}
@@ -336,8 +336,8 @@ export default function Page() {
               {/* Error Message */}
               {error && (
                 <div className={`mt-4 p-4 rounded-xl border animate-fade-in ${isDarkMode
-                    ? 'bg-red-900/30 border-red-600/30 text-red-300'
-                    : 'bg-red-500/20 border-red-500/30 text-pink-200'
+                  ? 'bg-red-900/30 border-red-600/30 text-red-300'
+                  : 'bg-red-50 border-red-300 text-red-700'
                   }`}>
                   {error}
                 </div>
@@ -351,13 +351,13 @@ export default function Page() {
           {/* Contact Section */}
           <section id="contact" className="mt-16 text-center">
             <div className={`p-8 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${isDarkMode
-                ? 'bg-gray-800/30 border-gray-700/50'
-                : 'bg-white/10 border-white/20'
+              ? 'bg-gray-800/30 border-gray-700/50'
+              : 'bg-white/80 border-slate-200 shadow-lg'
               }`}>
-              <h2 className={`text-2xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-white'}`}>
+              <h2 className={`text-2xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>
                 Get in Touch
               </h2>
-              <p className={`mb-6 ${isDarkMode ? 'text-gray-300' : 'text-pink-100'}`}>
+              <p className={`mb-6 ${isDarkMode ? 'text-gray-300' : 'text-slate-600'}`}>
                 Have questions or suggestions? Feel free to reach out!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -366,13 +366,13 @@ export default function Page() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`px-6 py-3 rounded-xl font-medium transition-all duration-200 ${isDarkMode
-                      ? 'bg-blue-600 hover:bg-blue-500 text-white'
-                      : 'bg-pink-500 hover:bg-pink-400 text-white'
+                    ? 'bg-blue-600 hover:bg-blue-500 text-white'
+                    : 'bg-blue-600 hover:bg-blue-700 text-white shadow-md'
                     } hover:scale-105 transform`}
                 >
                   🌐 Visit naimul.me
                 </a>
-                <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-pink-200'}`}>
+                <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-slate-500'}`}>
                   Developer & Creator
                 </div>
               </div>
